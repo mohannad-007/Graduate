@@ -17,8 +17,12 @@ class PatientAppointmentController extends Controller
     public function myAppointment(){
 
         $patient_id=auth()->user()->id;
-
         return $this->userService->myAppointment($patient_id);
+    }
 
+    public function archiveMyAppointment(){
+
+        $patient_id=auth()->user()->id;
+        return $this->userService->archiveMyAppointment($patient_id);
     }
 }

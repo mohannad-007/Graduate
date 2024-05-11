@@ -9,13 +9,17 @@ use App\Models\PatientHealthRecords;
 use App\Models\PatientMedication;
 use App\Models\PrescriptionMedicines;
 use App\Models\Radiographs;
+use App\Services\Patient\PatientService;
 use App\Traits\RespondsWithHttpStatus;
 use Illuminate\Http\Request;
 
 class HealthRecordController extends Controller
 {
    use RespondsWithHttpStatus;
+    public function __construct(
+        protected PatientService $userService
 
+    ){}
     public function createHealthRecord(Request $request)
     {
         $radiograph = $request->radiograph;
@@ -97,6 +101,15 @@ class HealthRecordController extends Controller
     }
 
 
+
+    public function viewDiseases(){
+
+        return $this->userService->viewDiseases();
+    }
+    public function viewHealthRecord(){
+
+    return $this->userService->viewHealthRecord();
+    }
 
 
 

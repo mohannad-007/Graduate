@@ -16,11 +16,11 @@ class PatientSessionController extends Controller
     public function __construct(protected PatientService $userService)
     {}
 
-    public function patientSession(PatientSessionRequest $request)
+    public function patientSessionRelatedWithStudent(PatientSessionRequest $request)
     {
         $student_id=$request->input('student_id');
         $patient_id = auth()->user()->id;
-        return $this->userService->patientSession($patient_id,$student_id);
+        return $this->userService->patientSessionRelatedWithStudent($patient_id,$student_id);
     }
 
 //    public function test(Request $request)

@@ -25,7 +25,9 @@ use App\Http\Controllers\Patient\PatientVisetedController;
 use App\Http\Controllers\Patient\PatientAppointmentController;
 use App\Http\Controllers\Patient\PatientToolsRequiredController;
 use App\Http\Controllers\Student\StudentSectionsViewController;
-
+use App\Http\Controllers\Student\StudentPatientViewController;
+use App\Http\Controllers\Student\StudentUpdateHealthRecordController;
+use App\Http\Controllers\Student\StudentSendPatientController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -52,12 +54,16 @@ Route::group(['middleware' => ['auth:sanctum', 'patient']], function () {
         Route::get('showProfileInfo', [PatientProfileController::class, 'showProfileInfo']);
         Route::post('createHealthRecord', [HealthRecordController::class, 'createHealthRecord']);
         Route::get('showPatientCaseByPatientId', [PatientTestResultsAfterDiagnosisController::class, 'showPatientCaseByPatientId']);
-        Route::get('patientSession', [PatientSessionController::class, 'patientSession']);
+        Route::get('patientSessionRelatedWithStudent', [PatientSessionController::class, 'patientSessionRelatedWithStudent']);
 //        Route::get('test', [PatientSessionController::class, 'test']);
         Route::post('bookAppointment', [PatientBookAppointmentDiagnosisController::class, 'bookAppointment']);
         Route::get('viseted', [PatientVisetedController::class, 'viseted']);
+        Route::get('archiveVisited', [PatientVisetedController::class, 'archiveVisited']);
         Route::get('myAppointment', [PatientAppointmentController::class, 'myAppointment']);
+        Route::get('archiveMyAppointment', [PatientAppointmentController::class, 'archiveMyAppointment']);
         Route::get('toolsRequired', [PatientToolsRequiredController::class, 'toolsRequired']);
+        Route::get('viewDiseases', [HealthRecordController::class, 'viewDiseases']);
+        Route::get('viewHealthRecord', [HealthRecordController::class, 'viewHealthRecord']);
 
     });
 });
@@ -72,6 +78,11 @@ Route::group(['middleware' => ['auth:sanctum', 'student']], function () {
     {
         Route::post('edit', [StudentProfileController::class, 'edit']);
         Route::get('sectionsView', [StudentSectionsViewController::class, 'sectionsView']);
+        Route::get('convertFromSection', [StudentPatientViewController::class, 'convertFromSection']);
+        Route::get('convertFromStudent', [StudentPatientViewController::class, 'convertFromStudent']);
+        Route::post('updateHealthRecord', [StudentUpdateHealthRecordController::class, 'updateHealthRecord']);
+        Route::get('studentViewCases', [StudentSendPatientController::class, 'studentViewCases']);
+        Route::post('studentSendCases', [StudentSendPatientController::class, 'studentSendCases']);
     });
 });
 //////////////////////////////////////////////////////////////////////////////////

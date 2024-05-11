@@ -60,6 +60,43 @@ class StudentService
             throw new HttpResponseException($this->internalErrorResponse('The Student Cannot be Found!'));
         }
         return  $this->resourceFoundResponse(data: $student,message: "Sections");
+    }
 
+    public function convertFromSection()
+    {
+        $student=$this->studentRepository->convertFromSection();
+        if (!$student)
+        {
+            throw new HttpResponseException($this->internalErrorResponse('Not Found Referrals!'));
+        }
+        return  $this->resourceFoundResponse(data: $student,message: "Patient");
+    }
+
+    public function convertFromStudent()
+    {
+        $student=$this->studentRepository->convertFromStudent();
+        if (!$student)
+        {
+            throw new HttpResponseException($this->internalErrorResponse('Not Found Referrals!'));
+        }
+        return  $this->resourceFoundResponse(data: $student,message: "Patient");
+    }
+    public function studentViewCases($typeId)
+    {
+        $student=$this->studentRepository->studentViewCases($typeId);
+        if (!$student)
+        {
+            throw new HttpResponseException($this->internalErrorResponse('Not Found type of cases!'));
+        }
+        return  $this->resourceFoundResponse(data: $student,message: "Student Cases");
+    }
+    public function studentSendCases($studentId,$patientCasesId,$note)
+    {
+        $student=$this->studentRepository->studentSendCases($studentId,$patientCasesId,$note);
+        if (!$student)
+        {
+            throw new HttpResponseException($this->internalErrorResponse('Not Found type of cases!'));
+        }
+        return  $this->resourceFoundResponse(data: $student,message: "done send cases");
     }
 }

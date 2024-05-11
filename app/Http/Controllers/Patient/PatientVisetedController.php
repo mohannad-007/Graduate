@@ -19,7 +19,12 @@ class PatientVisetedController extends Controller
         $patient_id=auth()->user()->id;
 
         return $this->userService->viseted($patient_id);
+    }
 
+    public function archiveVisited(){
 
+        $patient_id=auth()->user()->id;
+
+        return $this->userService->archiveVisited($patient_id);
     }
 }

@@ -8,4 +8,8 @@ interface StudentRepositoryInterface
     public function login(array $data);
     public function edit($id,array $data);
     public function sectionsView();
+    public function convertFromSection();
+    public function convertFromStudent();
+    public function studentViewCases($typeId);
+    public function studentSendCases($studentId,$patientCasesId,$note);
 }

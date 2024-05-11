@@ -7,16 +7,23 @@ use App\Services\Student\StudentService;
 use App\Traits\RespondsWithHttpStatus;
 use Illuminate\Http\Request;
 
-class StudentSectionsViewController extends Controller
+class StudentPatientViewController extends Controller
 {
+
     use RespondsWithHttpStatus;
     public function __construct(
         protected StudentService $userService
     ) {
     }
 
-    public function sectionsView(){
+    public function convertFromSection(){
 
-        return $this->userService->sectionsView();
+        return $this->userService->convertFromSection();
     }
+
+    public function convertFromStudent(){
+
+        return $this->userService->convertFromStudent();
+    }
+
 }

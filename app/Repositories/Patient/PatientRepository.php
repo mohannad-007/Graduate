@@ -7,9 +7,14 @@ use App\Models\DiagnosisAppointments;
 use App\Models\LaboratoryToolsRequired;
 use App\Models\Patient;
 use App\Models\PatientCases;
+use App\Models\PatientDisease;
 use App\Models\PatientHealthRecords;
+use App\Models\PatientMedication;
+use App\Models\PreexistingDisease;
+use App\Models\Radiographs;
 use App\Models\Sessions;
 use App\Traits\RespondsWithHttpStatus;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 class PatientRepository implements  PatientRepositoryInterface
@@ -51,7 +56,7 @@ class PatientRepository implements  PatientRepositoryInterface
         return $patient;
     }
 
-    public function patientSession($patient_id,$student_id){
+    public function patientSessionRelatedWithStudent($patient_id,$student_id){
 
         $sessions = Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
             ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
@@ -60,6 +65,7 @@ class PatientRepository implements  PatientRepositoryInterface
             ->select('sessions.*')
             ->with('supervisor','clinics.sections','referrals.patientCases')
             ->get();
+
         return $sessions;
     }
 
@@ -72,26 +78,67 @@ class PatientRepository implements  PatientRepositoryInterface
     }
 
     public function viseted($patient_id){
+
+        DiagnosisAppointments::where('date','<',Carbon::now()->startOfDay())
+            ->where('order_status','done_diagnosis')
+            ->delete();
         $data['diagnosisAppointments'] = DiagnosisAppointments::where('patient_id', $patient_id)
             ->where('order_status','done_diagnosis')
             ->get();
 
+
+        Sessions::where('history','<',Carbon::now()->startOfDay())
+            ->where(function ($query) {
+                $query->where('status_of_session', 'complete')
+                    ->orWhere('status_of_session', 'last_refarral');
+                })
+            ->delete();
         $data['sessions'] = Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
             ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
             ->where('patient_cases.patient_id', $patient_id)
-            ->where('status_of_session','complete')
+            ->where(function ($query) {
+                $query->where('status_of_session', 'complete')
+                    ->orWhere('status_of_session', 'last_refarral');
+                })
             ->select('sessions.*')
             ->with('supervisor','clinics.sections','referrals.patientCases')
             ->get();
 
         return $data;
     }
+    public function archiveVisited($patient_id){
+
+        $data['diagnosisAppointments'] = DiagnosisAppointments::where('patient_id', $patient_id)
+            ->onlyTrashed()
+            ->get();
+
+        $data['sessions'] = Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
+            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
+            ->where('patient_cases.patient_id', $patient_id)
+            ->select('sessions.*')
+            ->with('supervisor','clinics.sections','referrals.patientCases')
+            ->onlyTrashed()
+            ->get();
+
+        return $data;
+    }
 
     public function myAppointment($patient_id){
+
+        DiagnosisAppointments::where('date','<',Carbon::now()->startOfDay())
+            ->where('order_status','done_diagnosis')
+            ->delete();
         $data['diagnosisAppointments'] = DiagnosisAppointments::where('patient_id', $patient_id)
             ->where('order_status','acceptable')
             ->get();
 
+
+        Sessions::where('history','<',Carbon::now()->startOfDay())
+            ->where(function ($query) {
+                $query->where('status_of_session', 'complete')
+                    ->orWhere('status_of_session', 'last_refarral');
+                })
+            ->delete();
         $data['sessions'] = Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
             ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
             ->where('patient_cases.patient_id', $patient_id)
@@ -103,13 +150,53 @@ class PatientRepository implements  PatientRepositoryInterface
         return $data;
     }
 
+    public function archiveMyAppointment($patient_id){
+
+        $data['diagnosisAppointments'] = DiagnosisAppointments::where('patient_id', $patient_id)
+            ->onlyTrashed()
+            ->get();
+
+        $data['sessions'] = Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
+            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
+            ->where('patient_cases.patient_id', $patient_id)
+            ->select('sessions.*')
+            ->with('supervisor','clinics.sections','referrals.patientCases')
+            ->onlyTrashed()
+            ->get();
+
+        return $data;
+    }
+
     public function toolsRequired($patient_id){
 
-        $tools=LaboratoryToolsRequired::where('patient_id',$patient_id)
+        $tools=LaboratoryToolsRequired::join('sessions','laboratory_tools_requireds.session_id','=','sessions.id')
+            ->where('sessions.history','>=',Carbon::now()->startOfDay())
+            ->where('patient_id',$patient_id)
+            ->select('laboratory_tools_requireds.*')
             ->with('student','sessions')
             ->get();
+
         return $tools;
     }
+
+    public function viewDiseases(){
+
+        $Diseases=PreexistingDisease::get();
+        return $Diseases;
+    }
+    public function viewHealthRecord(){
+
+        $radiograph=Radiographs::where('patient_id',auth()->user()->id)->get();
+        $medicine=PatientMedication::where('patient_id',auth()->user()->id)->get();
+        $disease=PatientDisease::where('patient_id',auth()->user()->id)->with('preexistingDisease')->get();
+        return [
+            'Patient Radiographs'=>$radiograph,
+            'Patient Medicine'=>$medicine,
+            'Patient Disease'=>$disease,
+        ];
+    }
+
+
 
 
 }

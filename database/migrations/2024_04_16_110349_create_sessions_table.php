@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('history');
             $table->string('student_notes');
             $table->enum('status_of_session',['complete','not_complete','last_refarral','didnt_come']);
+            $table->softDeletes();
             $table->timestamps();
 
 

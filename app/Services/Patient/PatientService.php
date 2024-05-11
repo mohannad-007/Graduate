@@ -72,9 +72,9 @@ class PatientService
         return $this->resourceFoundResponse(data: $patient,message: "Patient Case Found Successful");
     }
 
-    public function patientSession($patient_id,$student_id){
+    public function patientSessionRelatedWithStudent($patient_id,$student_id){
 
-        $patient=$this->patientRepository->patientSession($patient_id,$student_id);
+        $patient=$this->patientRepository->patientSessionRelatedWithStudent($patient_id,$student_id);
         if (!$patient)
         {
             throw new HttpResponseException($this->notFoundResponse('The Patient Session Cannot be Found!'));
@@ -102,6 +102,15 @@ class PatientService
         }
         return $this->successResponse(data: $patient,message: "Patient Viseted");
     }
+    public function archiveVisited($patient_id){
+
+        $patient=$this->patientRepository->archiveVisited($patient_id);
+        if (!$patient)
+        {
+            throw new HttpResponseException($this->notFoundResponse('User not Found!'));
+        }
+        return $this->successResponse(data: $patient,message: "Patient Archive Visited");
+    }
 
     public function myAppointment($patient_id){
 
@@ -113,6 +122,16 @@ class PatientService
         return $this->successResponse(data: $patient,message: "Patient Appointment");
     }
 
+    public function archiveMyAppointment($patient_id){
+
+        $patient=$this->patientRepository->archiveMyAppointment($patient_id);
+        if (!$patient)
+        {
+            throw new HttpResponseException($this->notFoundResponse('User not Found!'));
+        }
+        return $this->successResponse(data: $patient,message: "Patient Archive Appointment");
+    }
+
     public function toolsRequired($patient_id){
 
         $patient=$this->patientRepository->toolsRequired($patient_id);
@@ -121,6 +140,25 @@ class PatientService
             throw new HttpResponseException($this->notFoundResponse('User not Found!'));
         }
         return $this->successResponse(data: $patient,message: "Patient Tools Required");
+    }
+
+    public function viewDiseases(){
+
+        $patient=$this->patientRepository->viewDiseases();
+        if (!$patient)
+        {
+            throw new HttpResponseException($this->notFoundResponse('Diseases not Found!'));
+        }
+        return $this->successResponse(data: $patient,message: "Patient Diseases");
+    }
+    public function viewHealthRecord(){
+
+    $patient=$this->patientRepository->viewHealthRecord();
+    if (!$patient)
+    {
+        throw new HttpResponseException($this->notFoundResponse('Health Record not Found!'));
+    }
+    return $this->successResponse(data: $patient,message: "Patient Health Record");
     }
 
 
