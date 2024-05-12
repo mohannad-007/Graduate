@@ -12,4 +12,6 @@ interface StudentRepositoryInterface
     public function convertFromStudent();
     public function studentViewCases($typeId);
     public function studentSendCases($studentId,$patientCasesId,$note);
+    public function studentDiagnosisCases();
+    public function studentPatientHealthRecord($patientId);
 }

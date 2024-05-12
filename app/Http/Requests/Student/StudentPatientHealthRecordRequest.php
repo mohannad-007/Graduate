@@ -4,7 +4,7 @@ namespace App\Http\Requests\Student;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StudentSendPatientRequest extends FormRequest
+class StudentPatientHealthRecordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class StudentSendPatientRequest extends FormRequest
     public function rules(): array
     {
         return [
-
+            'patient_id'=>'required'
         ];
     }
 }

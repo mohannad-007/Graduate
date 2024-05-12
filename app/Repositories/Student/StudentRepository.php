@@ -2,8 +2,12 @@
 
 namespace App\Repositories\Student;
 
+use App\Models\DiagnosisAppointments;
 use App\Models\Patient;
+use App\Models\PatientDisease;
+use App\Models\PatientMedication;
 use App\Models\PatientTransferRequests;
+use App\Models\Radiographs;
 use App\Models\Referrals;
 use App\Models\RequiredOperations;
 use App\Models\Student;
@@ -78,12 +82,45 @@ class StudentRepository implements StudentRepositoryInterface
             'note'=>$note,
         ]);
 
-        return [$refferalsNew,$patientTransferRequest];
+        return [
+            $refferalsNew,
+            $patientTransferRequest
+        ];
 
-//        return $this->resourceCreatedResponse(data: [
-//            $refferalsNew,
-//            $patientTransferRequest
-//        ], message: 'success');
     }
+
+    public function studentDiagnosisCases()
+    {
+        $studentCases = DiagnosisAppointments::where('student_id',auth()->user()->id)
+            ->with('patient')
+            ->get();
+
+        return [
+          $studentCases
+        ];
+
+    }
+
+    public function studentPatientHealthRecord($patientId)
+    {
+        $radiograph = Radiographs::where('patient_id',$patientId)
+            ->get();
+
+        $medicine = PatientMedication::where('patient_id',$patientId)
+            ->get();
+
+        $diseases = PatientDisease::where('patient_id',$patientId)
+            ->with('preexistingDisease')
+            ->get();
+
+        return [
+            'Radiograph'=>$radiograph,
+            'PatientMedication'=>$medicine,
+            'PatientDisease'=>$diseases
+        ];
+
+    }
+
+
 
 }

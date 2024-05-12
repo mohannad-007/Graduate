@@ -99,4 +99,22 @@ class StudentService
         }
         return  $this->resourceFoundResponse(data: $student,message: "done send cases");
     }
+    public function studentDiagnosisCases()
+    {
+        $student=$this->studentRepository->studentDiagnosisCases();
+        if (!$student)
+        {
+            throw new HttpResponseException($this->internalErrorResponse('Not Found Cases!'));
+        }
+        return  $this->resourceFoundResponse(data: $student,message: "done Get Cases");
+    }
+    public function studentPatientHealthRecord($patientId)
+    {
+        $student=$this->studentRepository->studentPatientHealthRecord($patientId);
+        if (!$student)
+        {
+            throw new HttpResponseException($this->internalErrorResponse('Not Found Health Record!'));
+        }
+        return  $this->resourceFoundResponse(data: $student,message: "done Health Record");
+    }
 }

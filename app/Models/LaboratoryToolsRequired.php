@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class LaboratoryToolsRequired extends Model
 {
     use HasFactory;
-    protected $fillable= ['image_tool','details_of_tool','student_id','patient_id'];
+    protected $guarded=[];
+//    protected $fillable= ['image_tool','details_of_tool','student_id','patient_id'];
 
     public function patient()
     {

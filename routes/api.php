@@ -16,7 +16,10 @@ use App\Http\Controllers\Patient\PatientTestResultsAfterDiagnosisController;
 use App\Http\Controllers\Section\SectionAuthController;
 use App\Http\Controllers\Section\SectionProfileController;
 use App\Http\Controllers\Student\StudentAuthController;
+use App\Http\Controllers\Student\StudentDiagnosisCasesController;
+use App\Http\Controllers\Student\StudentPatientHealthRecordController;
 use App\Http\Controllers\Student\StudentProfileController;
+use App\Http\Controllers\Student\StudentToolsRequiredController;
 use App\Http\Controllers\Supervisor\SupervisorAuthController;
 use App\Http\Controllers\Supervisor\SupervisorProfileController;
 use Illuminate\Http\Request;
@@ -83,6 +86,9 @@ Route::group(['middleware' => ['auth:sanctum', 'student']], function () {
         Route::post('updateHealthRecord', [StudentUpdateHealthRecordController::class, 'updateHealthRecord']);
         Route::get('studentViewCases', [StudentSendPatientController::class, 'studentViewCases']);
         Route::post('studentSendCases', [StudentSendPatientController::class, 'studentSendCases']);
+        Route::post('toolsRequired', [StudentToolsRequiredController::class, 'toolsRequired']);
+        Route::get('studentDiagnosisCases', [StudentDiagnosisCasesController::class, 'studentDiagnosisCases']);
+        Route::get('studentPatientHealthRecord', [StudentPatientHealthRecordController::class, 'studentPatientHealthRecord']);
     });
 });
 //////////////////////////////////////////////////////////////////////////////////
