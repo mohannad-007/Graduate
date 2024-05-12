@@ -32,6 +32,7 @@ class StudentAuthController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
         return $this->successResponse('Logged out successfully');
+		//Logout Fuck successfully
     }
 
 }
