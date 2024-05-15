@@ -3,6 +3,7 @@
 namespace App\Repositories\Student;
 
 use App\Models\DiagnosisAppointments;
+use App\Models\LaboratoryToolsRequired;
 use App\Models\Patient;
 use App\Models\PatientDisease;
 use App\Models\PatientMedication;
@@ -10,6 +11,7 @@ use App\Models\PatientTransferRequests;
 use App\Models\Radiographs;
 use App\Models\Referrals;
 use App\Models\RequiredOperations;
+use App\Models\Sessions;
 use App\Models\Student;
 use App\Models\TypesOfCases;
 use App\Traits\RespondsWithHttpStatus;
@@ -100,7 +102,6 @@ class StudentRepository implements StudentRepositoryInterface
         ];
 
     }
-
     public function studentPatientHealthRecord($patientId)
     {
         $radiograph = Radiographs::where('patient_id',$patientId)
@@ -120,6 +121,50 @@ class StudentRepository implements StudentRepositoryInterface
         ];
 
     }
+
+    public function studentPatientToolsRequired($patientId,$sessionId)
+    {
+        $studentTools = LaboratoryToolsRequired::where('patient_id',$patientId)
+            ->where('session_id',$sessionId)
+            ->where('student_id',auth()->user()->id)
+            ->with('patient','sessions')
+            ->get();
+
+        return $studentTools;
+
+    }
+    public function studentPatientSessions($patientId)
+    {
+        $data['sessions'] = Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
+            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
+            ->where('patient_cases.patient_id', $patientId)
+            ->select('sessions.*')
+            ->with('supervisor','clinics.sections','referrals.patientCases')
+            ->get();
+
+        return $data;
+
+    }
+    public function studentAppointments($history)
+    {
+//        $data['sessions'] = Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
+//            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
+//            ->where('patient_cases.patient_id', $patientId)
+//            ->select('sessions.*')
+//            ->with('supervisor','clinics.sections','referrals.patientCases')
+//            ->get();
+
+        $data=Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
+            ->where('history',$history)
+            ->where('referrals.student_id', auth()->user()->id)
+            ->select('sessions.*')
+            ->with('supervisor','clinics.sections','referrals.patientCases')
+            ->get();
+
+        return $data;
+
+    }
+
 
 
 

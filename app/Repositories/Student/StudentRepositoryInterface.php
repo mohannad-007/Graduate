@@ -14,4 +14,7 @@ interface StudentRepositoryInterface
     public function studentSendCases($studentId,$patientCasesId,$note);
     public function studentDiagnosisCases();
     public function studentPatientHealthRecord($patientId);
+    public function studentPatientToolsRequired($patientId,$sessionId);
+    public function studentPatientSessions($patientId);
+    public function studentAppointments($history);
 }

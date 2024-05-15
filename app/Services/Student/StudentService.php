@@ -117,4 +117,31 @@ class StudentService
         }
         return  $this->resourceFoundResponse(data: $student,message: "done Health Record");
     }
+    public function studentPatientToolsRequired($patientId,$sessionId)
+    {
+        $student=$this->studentRepository->studentPatientToolsRequired($patientId,$sessionId);
+        if (!$student)
+        {
+            throw new HttpResponseException($this->internalErrorResponse('Not Found Tools!'));
+        }
+        return  $this->resourceFoundResponse(data: $student,message: "Patient Tools Required");
+    }
+    public function studentPatientSessions($patientId)
+    {
+        $student=$this->studentRepository->studentPatientSessions($patientId);
+        if (!$student)
+        {
+            throw new HttpResponseException($this->internalErrorResponse('Not Found Session!'));
+        }
+        return  $this->resourceFoundResponse(data: $student,message: "Patient Tools Required");
+    }
+    public function studentAppointments($history)
+    {
+        $student=$this->studentRepository->studentAppointments($history);
+        if (!$student)
+        {
+            throw new HttpResponseException($this->internalErrorResponse('Not Found Session!'));
+        }
+        return  $this->resourceFoundResponse(data: $student,message: "My Appointments");
+    }
 }

@@ -18,6 +18,8 @@ use App\Http\Controllers\Section\SectionProfileController;
 use App\Http\Controllers\Student\StudentAuthController;
 use App\Http\Controllers\Student\StudentDiagnosisCasesController;
 use App\Http\Controllers\Student\StudentPatientHealthRecordController;
+use App\Http\Controllers\Student\StudentPatientSessionsController;
+use App\Http\Controllers\Student\StudentPatientToolsRequiredController;
 use App\Http\Controllers\Student\StudentProfileController;
 use App\Http\Controllers\Student\StudentToolsRequiredController;
 use App\Http\Controllers\Supervisor\SupervisorAuthController;
@@ -31,6 +33,7 @@ use App\Http\Controllers\Student\StudentSectionsViewController;
 use App\Http\Controllers\Student\StudentPatientViewController;
 use App\Http\Controllers\Student\StudentUpdateHealthRecordController;
 use App\Http\Controllers\Student\StudentSendPatientController;
+use App\Http\Controllers\Student\StudentAppointmentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -89,6 +92,9 @@ Route::group(['middleware' => ['auth:sanctum', 'student']], function () {
         Route::post('toolsRequired', [StudentToolsRequiredController::class, 'toolsRequired']);
         Route::get('studentDiagnosisCases', [StudentDiagnosisCasesController::class, 'studentDiagnosisCases']);
         Route::get('studentPatientHealthRecord', [StudentPatientHealthRecordController::class, 'studentPatientHealthRecord']);
+        Route::get('studentPatientToolsRequired', [StudentPatientToolsRequiredController::class, 'studentPatientToolsRequired']);
+        Route::get('studentPatientSessions', [StudentPatientSessionsController::class, 'studentPatientSessions']);
+        Route::get('studentAppointments', [StudentAppointmentController::class, 'studentAppointments']);
     });
 });
 //////////////////////////////////////////////////////////////////////////////////
