@@ -17,6 +17,7 @@ return new class extends Migration
             $table->bigInteger('student_id')->unsigned()->nullable();
             $table->bigInteger('diagnosis_id')->unsigned()->nullable();
             $table->date('date')->nullable();
+            $table->time('timeDiagnosis')->nullable();
             $table->enum('order_status',['unacceptable','acceptable','pending','done_diagnosis'])->default('pending');
             $table->string('reason');
             $table->softDeletes();

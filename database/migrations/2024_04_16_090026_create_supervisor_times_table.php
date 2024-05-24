@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void //اوقات دوام المشرف
         // ملاحظة ال يوم حطيتو سترنغ بس المشرف
     {
-        Schema::create('diagnosis_times', function (Blueprint $table) {
+        Schema::create('supervisor_times', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('supervisor_id')->unsigned();
             $table->bigInteger('clinic_id')->unsigned();

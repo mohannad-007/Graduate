@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('supervisor_evaluation');
             $table->string('supervisor_notes');
             $table->date('history');
+            $table->time('timeSession');
             $table->string('student_notes');
             $table->enum('status_of_session',['complete','not_complete','last_refarral','didnt_come']);
             $table->softDeletes();

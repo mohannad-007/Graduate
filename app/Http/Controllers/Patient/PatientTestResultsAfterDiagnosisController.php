@@ -14,7 +14,7 @@ class PatientTestResultsAfterDiagnosisController extends Controller
     public function __construct(protected PatientService $userService)
     {}
 
-    public function showPatientCaseByPatientId(PatientTestResultsAfterDiagnosisRequest $request)
+    public function showPatientCaseByPatientId()
     {
         $patient_id=auth()->user()->id;
         return $this->userService->showPatientCaseByPatientId($patient_id);
