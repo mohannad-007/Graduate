@@ -34,6 +34,7 @@ use App\Http\Controllers\Student\StudentPatientViewController;
 use App\Http\Controllers\Student\StudentUpdateHealthRecordController;
 use App\Http\Controllers\Student\StudentSendPatientController;
 use App\Http\Controllers\Student\StudentAppointmentController;
+use App\Http\Controllers\Patient\PatientRelatedWithStudentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -70,6 +71,7 @@ Route::group(['middleware' => ['auth:sanctum', 'patient']], function () {
         Route::get('toolsRequired', [PatientToolsRequiredController::class, 'toolsRequired']);
         Route::get('viewDiseases', [HealthRecordController::class, 'viewDiseases']);
         Route::get('viewHealthRecord', [HealthRecordController::class, 'viewHealthRecord']);
+        Route::get('patientRelatedWithStudent', [PatientRelatedWithStudentController::class, 'patientRelatedWithStudent']);
 
     });
 });

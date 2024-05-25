@@ -19,5 +19,6 @@ interface PatientRepositoryInterface
     public function toolsRequired($patient_id);
     public function viewDiseases();
     public function viewHealthRecord();
+    public function patientRelatedWithStudent($patientId);
 
 }

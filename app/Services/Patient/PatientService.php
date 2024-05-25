@@ -161,6 +161,16 @@ class PatientService
     return $this->successResponse(data: $patient,message: "Patient Health Record");
     }
 
+    public function patientRelatedWithStudent($patientId){
+
+    $patient=$this->patientRepository->patientRelatedWithStudent($patientId);
+    if (!$patient)
+    {
+        throw new HttpResponseException($this->notFoundResponse('patient not Found!'));
+    }
+    return $this->successResponse(data: $patient,message: "Patient Related With Student");
+    }
+
 
 
 }

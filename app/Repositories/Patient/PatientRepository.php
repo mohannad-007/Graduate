@@ -195,6 +195,24 @@ class PatientRepository implements  PatientRepositoryInterface
             'Patient Disease'=>$disease,
         ];
     }
+    public function patientRelatedWithStudent($patientId){
+
+        $student=Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
+            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
+            ->where('patient_cases.patient_id', $patientId)
+            ->select('sessions.*')
+            ->with('referrals.student')
+            ->get();
+
+        $student2=DiagnosisAppointments::where('patient_id', $patientId)
+            ->with('student')
+            ->get();
+
+        return [
+            'Patient related with student'=>$student,
+            'Patient related with student2'=>$student2,
+        ];
+    }
 
 
 
