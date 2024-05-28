@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\Users\AdminSectionsController;
 use App\Http\Controllers\Admin\Users\AdminSupervisorsController;
 use App\Http\Controllers\Diagnosis\DiagnosisAuthController;
 use App\Http\Controllers\Diagnosis\DiagnosisProfileController;
+use App\Http\Controllers\Diagnosis\PatientViewAcceptedController;
+use App\Http\Controllers\Diagnosis\PatientViewPendingController;
 use App\Http\Controllers\Patient\HealthRecordController;
 use App\Http\Controllers\Patient\PatientAuthController;
 use App\Http\Controllers\Patient\PatientBookAppointmentDiagnosisController;
@@ -154,15 +156,25 @@ Route::group(['middleware' => ['auth:sanctum', 'supervisor']], function () {
     });
 });
 //////////////////////////////////////////////////////////////////////////////////
+
+
+
 //Diagnosis//////////////////////////////////////////////////////////////////////////
-Route::post('diagnosis/auth/login', [DiagnosisAuthController::class, 'login']);
+Route::post('diagnosis/auth/login', [DiagnosisAuthController::class,'login']);
 Route::group(['middleware' => ['auth:sanctum', 'diagnosis']], function () {
-    Route::post('/diagnosis/auth/logout', [DiagnosisAuthController::class, 'logout']);
+    Route::post('/diagnosis/auth/logout', [DiagnosisAuthController::class,'logout']);
     Route::prefix('/diagnosis/profile')->group(function ()
     {
-        Route::post('edit', [DiagnosisProfileController::class, 'edit']);
+        Route::post('edit', [DiagnosisProfileController::class,'edit']);
+        Route::get('pendingPatientView', [PatientViewPendingController::class,'pendingPatientView']);
+        Route::get('acceptPatientView', [PatientViewAcceptedController::class,'acceptPatientView']);
+
+
     });
 });
+
+
+
 //////////////////////////////////////////////////////////////////////////////////
 //Sections//////////////////////////////////////////////////////////////////////////
 Route::post('section/auth/login', [SectionAuthController::class, 'login']);

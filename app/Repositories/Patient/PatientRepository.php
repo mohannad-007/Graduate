@@ -186,6 +186,11 @@ class PatientRepository implements  PatientRepositoryInterface
     }
     public function viewHealthRecord(){
 
+        $healthRecord=PatientHealthRecords::where('patient_id',auth()->user()->id)
+            ->first();
+        if ($healthRecord==null){
+            return false;
+        }
         $radiograph=Radiographs::where('patient_id',auth()->user()->id)->get();
         $medicine=PatientMedication::where('patient_id',auth()->user()->id)->get();
         $disease=PatientDisease::where('patient_id',auth()->user()->id)->with('preexistingDisease')->get();

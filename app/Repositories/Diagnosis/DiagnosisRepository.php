@@ -3,6 +3,7 @@
 namespace App\Repositories\Diagnosis;
 
 use App\Models\Diagnosis;
+use App\Models\DiagnosisAppointments;
 use App\Models\Supervisor;
 use Illuminate\Support\Facades\Hash;
 
@@ -27,6 +28,17 @@ class DiagnosisRepository implements  DiagnosisRepositoryInterface
         $diagnosis=Diagnosis::where('email',$data['email'])->first();
         if(!$diagnosis || !Hash::check($data['password'],$diagnosis->password))
             return null;
+        return $diagnosis;
+    }
+
+    public function pendingPatientView()
+    {
+        $diagnosis=DiagnosisAppointments::where('order_status','pending')->get();
+        return $diagnosis;
+    }
+    public function acceptPatientView()
+    {
+        $diagnosis=DiagnosisAppointments::where('order_status','acceptable')->get();
         return $diagnosis;
     }
 }

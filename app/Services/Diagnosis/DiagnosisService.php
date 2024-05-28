@@ -62,4 +62,24 @@ class DiagnosisService
         }
         return  $this->resourceCreatedResponse(['token'=>$token],"Diagnosis Login Successful");
     }
+    public function pendingPatientView()
+    {
+        $patient = $this->diagnosisRepository->pendingPatientView();
+        if (!$patient) {
+            throw new HttpResponseException($this->internalErrorResponse('You dont have an Appointment!'));
+        }
+        return $this->resourceFoundResponse(data: $patient,message:"Diagnosis Found Successful");
+    }
+    public function acceptPatientView()
+    {
+        $patient = $this->diagnosisRepository->acceptPatientView();
+        if (!$patient) {
+            throw new HttpResponseException($this->internalErrorResponse('You dont have an Accepted Appointment!'));
+        }
+        return $this->resourceFoundResponse(data: $patient,message:"Diagnosis Found Successful");
+    }
+
+
+
+
 }

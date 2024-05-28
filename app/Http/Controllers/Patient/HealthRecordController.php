@@ -109,6 +109,7 @@ class HealthRecordController extends Controller
     public function viewHealthRecord(){
 
     return $this->userService->viewHealthRecord();
+
     }
 
 
