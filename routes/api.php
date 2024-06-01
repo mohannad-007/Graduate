@@ -7,8 +7,11 @@ use App\Http\Controllers\Admin\Users\AdminSectionsController;
 use App\Http\Controllers\Admin\Users\AdminSupervisorsController;
 use App\Http\Controllers\Diagnosis\DiagnosisAuthController;
 use App\Http\Controllers\Diagnosis\DiagnosisProfileController;
+use App\Http\Controllers\Diagnosis\PatientAcceptAppointmentController;
 use App\Http\Controllers\Diagnosis\PatientViewAcceptedController;
+use App\Http\Controllers\Diagnosis\PatientViewCurrentController;
 use App\Http\Controllers\Diagnosis\PatientViewPendingController;
+use App\Http\Controllers\Diagnosis\StudentViewController;
 use App\Http\Controllers\Patient\HealthRecordController;
 use App\Http\Controllers\Patient\PatientAuthController;
 use App\Http\Controllers\Patient\PatientBookAppointmentDiagnosisController;
@@ -168,6 +171,10 @@ Route::group(['middleware' => ['auth:sanctum', 'diagnosis']], function () {
         Route::post('edit', [DiagnosisProfileController::class,'edit']);
         Route::get('pendingPatientView', [PatientViewPendingController::class,'pendingPatientView']);
         Route::get('acceptPatientView', [PatientViewAcceptedController::class,'acceptPatientView']);
+        Route::get('currentPatientView', [PatientViewCurrentController::class,'currentPatientView']);
+        Route::put('acceptPatientAppointment', [PatientAcceptAppointmentController::class,'acceptPatientAppointment']);
+        Route::get('studentView', [StudentViewController::class,'studentView']);
+        Route::get('studentTrueDiagnosisView', [StudentViewController::class,'studentTrueDiagnosisView']);
 
 
     });

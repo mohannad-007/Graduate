@@ -4,7 +4,9 @@ namespace App\Repositories\Diagnosis;
 
 use App\Models\Diagnosis;
 use App\Models\DiagnosisAppointments;
+use App\Models\Student;
 use App\Models\Supervisor;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 class DiagnosisRepository implements  DiagnosisRepositoryInterface
@@ -41,4 +43,38 @@ class DiagnosisRepository implements  DiagnosisRepositoryInterface
         $diagnosis=DiagnosisAppointments::where('order_status','acceptable')->get();
         return $diagnosis;
     }
+    public function currentPatientView()
+    {
+        $diagnosis=DiagnosisAppointments::where('date',Carbon::today())
+            ->with('patient','student','diagnosis')
+            ->get();
+        return $diagnosis;
+    }
+    public function acceptPatientAppointment($data)
+    {
+        $diagnosis=DiagnosisAppointments::where('id',$data['id'])
+            ->update([
+                'order_status'=>'acceptable',
+                'date'=>$data['date'],
+                'timeDiagnosis'=>$data['timeDiagnosis']
+            ]);
+
+        return $diagnosis;
+    }
+    public function studentView()
+    {
+        $student=Student::get();
+
+        return $student;
+    }
+    public function studentTrueDiagnosisView()
+    {
+        $student=Student::where('diagnosis',1)->get();
+
+        return $student;
+    }
+
+
+
+
 }

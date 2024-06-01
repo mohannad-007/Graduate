@@ -10,5 +10,9 @@ interface DiagnosisRepositoryInterface
     public function login(array $data);
     public function pendingPatientView();
     public function acceptPatientView();
+    public function currentPatientView();
+    public function acceptPatientAppointment(array $data);
+    public function studentView();
+    public function studentTrueDiagnosisView();
 
 }

@@ -78,6 +78,38 @@ class DiagnosisService
         }
         return $this->resourceFoundResponse(data: $patient,message:"Diagnosis Found Successful");
     }
+    public function currentPatientView()
+    {
+        $patient = $this->diagnosisRepository->currentPatientView();
+        if (!$patient) {
+            throw new HttpResponseException($this->internalErrorResponse('You dont have an Appointment today!'));
+        }
+        return $this->resourceFoundResponse(data: $patient,message:"Diagnosis Appointment ");
+    }
+    public function acceptPatientAppointment(array $data)
+    {
+        $appointment = $this->diagnosisRepository->acceptPatientAppointment($data);
+        if (!$appointment) {
+            throw new HttpResponseException($this->internalErrorResponse('Appointment notFound!'));
+        }
+        return $this->resourceFoundResponse(data: $appointment,message:"Diagnosis Appointment Accepted");
+    }
+    public function studentView()
+    {
+        $student = $this->diagnosisRepository->studentView();
+        if (!$student) {
+            throw new HttpResponseException($this->internalErrorResponse('Student notFound!'));
+        }
+        return $this->resourceFoundResponse(data: $student,message:"All Student");
+    }
+    public function studentTrueDiagnosisView()
+    {
+        $student = $this->diagnosisRepository->studentTrueDiagnosisView();
+        if (!$student) {
+            throw new HttpResponseException($this->internalErrorResponse('Student notFound!'));
+        }
+        return $this->resourceFoundResponse(data: $student,message:"All Student Have Access To Diagnosis");
+    }
 
 
 
