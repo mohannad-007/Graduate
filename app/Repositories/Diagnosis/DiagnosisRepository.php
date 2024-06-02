@@ -35,16 +35,27 @@ class DiagnosisRepository implements  DiagnosisRepositoryInterface
 
     public function pendingPatientView()
     {
-        $diagnosis=DiagnosisAppointments::where('order_status','pending')->get();
+        $diagnosis=DiagnosisAppointments::where('order_status','pending')
+            ->with('patient','student','diagnosis')
+            ->get();
         return $diagnosis;
     }
     public function acceptPatientView()
     {
-        $diagnosis=DiagnosisAppointments::where('order_status','acceptable')->get();
+        $diagnosis=DiagnosisAppointments::where('order_status','acceptable')
+            ->with('patient','student','diagnosis')
+            ->get();
         return $diagnosis;
     }
     public function currentPatientView()
     {
+        $today=Carbon::today();
+        $diagnosisRemove=DiagnosisAppointments::where('date','<',$today)
+            ->update([
+                'order_status'=>'pending',
+                'timeDiagnosis'=>null,
+                'date'=>null
+            ]);
         $diagnosis=DiagnosisAppointments::where('date',Carbon::today())
             ->with('patient','student','diagnosis')
             ->get();
@@ -70,6 +81,13 @@ class DiagnosisRepository implements  DiagnosisRepositoryInterface
     public function studentTrueDiagnosisView()
     {
         $student=Student::where('diagnosis',1)->get();
+
+        return $student;
+    }
+    public function studentGiveRules($studentIds)
+    {
+        $student=Student::whereIn('id', $studentIds)
+            ->update(['diagnosis' => true]);
 
         return $student;
     }

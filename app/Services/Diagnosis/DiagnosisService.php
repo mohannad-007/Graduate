@@ -110,6 +110,14 @@ class DiagnosisService
         }
         return $this->resourceFoundResponse(data: $student,message:"All Student Have Access To Diagnosis");
     }
+    public function studentGiveRules($studentIds)
+    {
+        $student = $this->diagnosisRepository->studentGiveRules($studentIds);
+        if (!$student) {
+            throw new HttpResponseException($this->internalErrorResponse('Student notFound!'));
+        }
+        return $this->resourceFoundResponse(data: $student,message:"Students Give Diagnosis Access");
+    }
 
 
 

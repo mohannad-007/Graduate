@@ -14,5 +14,6 @@ interface DiagnosisRepositoryInterface
     public function acceptPatientAppointment(array $data);
     public function studentView();
     public function studentTrueDiagnosisView();
+    public function studentGiveRules($studentIds);
 
 }
