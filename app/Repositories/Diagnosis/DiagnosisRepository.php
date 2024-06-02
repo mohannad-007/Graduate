@@ -35,15 +35,23 @@ class DiagnosisRepository implements  DiagnosisRepositoryInterface
 
     public function pendingPatientView()
     {
-        $diagnosis=DiagnosisAppointments::where('order_status','pending')
-            ->with('patient','student','diagnosis')
+        $diagnosis=DiagnosisAppointments::where([
+            'order_status'=>'pending',
+            'student_id'=>null,
+            'diagnosis_id'=>null,
+        ])
+            ->with('patient')
             ->get();
         return $diagnosis;
     }
     public function acceptPatientView()
     {
-        $diagnosis=DiagnosisAppointments::where('order_status','acceptable')
-            ->with('patient','student','diagnosis')
+        $diagnosis=DiagnosisAppointments::where([
+            'order_status'=>'acceptable',
+            'student_id'=>null,
+            'diagnosis_id'=>null,
+        ])
+            ->with('patient')
             ->get();
         return $diagnosis;
     }
@@ -57,6 +65,7 @@ class DiagnosisRepository implements  DiagnosisRepositoryInterface
                 'date'=>null
             ]);
         $diagnosis=DiagnosisAppointments::where('date',Carbon::today())
+            ->where('order_status','acceptable')
             ->with('patient','student','diagnosis')
             ->get();
         return $diagnosis;
@@ -91,6 +100,7 @@ class DiagnosisRepository implements  DiagnosisRepositoryInterface
 
         return $student;
     }
+
 
 
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Users\AdminSupervisorsController;
 use App\Http\Controllers\Diagnosis\DiagnosisAuthController;
 use App\Http\Controllers\Diagnosis\DiagnosisProfileController;
 use App\Http\Controllers\Diagnosis\PatientAcceptAppointmentController;
+use App\Http\Controllers\Diagnosis\PatientSortingViaStudentsController;
 use App\Http\Controllers\Diagnosis\PatientViewAcceptedController;
 use App\Http\Controllers\Diagnosis\PatientViewCurrentController;
 use App\Http\Controllers\Diagnosis\PatientViewPendingController;
@@ -177,6 +178,7 @@ Route::group(['middleware' => ['auth:sanctum', 'diagnosis']], function () {
         Route::get('studentView', [StudentViewController::class,'studentView']);
         Route::get('studentTrueDiagnosisView', [StudentViewController::class,'studentTrueDiagnosisView']);
         Route::post('studentGiveRules', [StudentGiveRulesDiagnosisController::class,'studentGiveRules']);
+        Route::get('patientSortingViaStudents', [PatientSortingViaStudentsController::class,'patientSortingViaStudents']);
 
 
     });
