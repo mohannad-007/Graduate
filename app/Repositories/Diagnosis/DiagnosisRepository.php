@@ -79,7 +79,8 @@ class DiagnosisRepository implements  DiagnosisRepositoryInterface
                 'timeDiagnosis'=>$data['timeDiagnosis']
             ]);
 
-        return $diagnosis;
+        $updatedAppointment = DiagnosisAppointments::with(['patient','student'])->find($data['id']);
+        return $updatedAppointment;
     }
     public function studentView()
     {
