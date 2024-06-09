@@ -32,7 +32,10 @@ class PatientSortingViaStudentsController extends Controller
 //        dd($numStudents);
 
         if ($numStudents == 0) {
-            return response()->json(['error' => 'No students with diagnosis permission available'], 400);
+            return response()->json(['error' => 'No students with diagnosis permission available'], 404);
+        }
+        if ($numPatients == 0) {
+            return response()->json(['error' => 'No Patient Available Today'], 404);
         }
 
         $updatedAppointments = [];
