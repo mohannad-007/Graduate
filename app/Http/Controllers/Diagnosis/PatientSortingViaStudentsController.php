@@ -92,10 +92,6 @@ class PatientSortingViaStudentsController extends Controller
             }
         }
 
-//        return response()->json([
-//            'message' => 'Patients Sorted into Student successfully',
-//            'updated_appointments' => $updatedAppointments
-//        ]);
         return $this->successResponse(data:$updatedAppointments,message:'Patients Sorted into Student successfully' );
     }
 

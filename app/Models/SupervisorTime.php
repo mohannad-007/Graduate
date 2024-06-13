@@ -16,6 +16,6 @@ class SupervisorTime extends Model
     }
     public function clinics()
     {
-        return $this->belongsTo(Clinics::class);
+        return $this->belongsTo(Clinics::class,'clinic_id');
     }
 }

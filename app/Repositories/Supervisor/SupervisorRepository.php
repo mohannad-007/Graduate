@@ -3,8 +3,10 @@
 namespace App\Repositories\Supervisor;
 
 use App\Models\Admin;
+use App\Models\Sessions;
 use App\Models\Student;
 use App\Models\Supervisor;
+use App\Models\SupervisorTime;
 use Illuminate\Support\Facades\Hash;
 
 class SupervisorRepository implements  SupervisorRepositoryInterface
@@ -32,4 +34,91 @@ class SupervisorRepository implements  SupervisorRepositoryInterface
             return null;
         return $supervisor;
     }
+    public function getClinic()
+    {
+        $supervisor=SupervisorTime::where('supervisor_id',auth()->user()->id)
+            ->with('supervisor','clinics')
+            ->get();
+        if(!$supervisor)
+            return null;
+        return $supervisor;
+    }
+    public function getSessions()
+    {
+        $supervisor=Sessions::where('supervisor_id',auth()->user()->id)
+            ->with('supervisor','clinics','referrals')
+            ->get();
+        if(!$supervisor)
+            return null;
+        return $supervisor;
+    }
+    public function sessionDetails($session_id)
+    {
+        $supervisor=Sessions::where('id',$session_id)
+            ->with('supervisor','clinics','referrals')
+            ->get();
+        if(!$supervisor)
+            return null;
+        return $supervisor;
+    }
+    public function addSessionNotes($session_id,$notes,$evaluation)
+    {
+        $supervisor=Sessions::where([
+            'id'=>$session_id,
+            'supervisor_id'=>auth()->user()->id
+        ])
+            ->update(['supervisor_notes'=>$notes,'supervisor_evaluation'=>$evaluation]);
+        if(!$supervisor)
+            return null;
+        return $supervisor;
+    }
+    public function studentInClinics()
+    {
+        $supervisor = Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
+            ->join('student', 'referrals.student_id', '=', 'student.id')
+            ->select('sessions.clinic_id', 'student.*')
+            ->orderBy('sessions.clinic_id')
+            ->get()
+            ->groupBy('clinic_id');
+        if(!$supervisor)
+            return null;
+        return $supervisor;
+    }
+    public function studentPatient($clinic_id)
+    {
+        $supervisor=Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
+            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
+            ->join('patient', 'patient_cases.patient_id', '=', 'patient.id')
+            ->where('sessions.clinic_id', $clinic_id)
+            ->select(
+                'patient.*',
+                'patient_cases.*',
+                'referrals.*',
+                'sessions.*'
+            )
+            ->orderBy('referrals.student_id')
+            ->get()
+            ->groupBy('referrals.student_id');
+
+        if(!$supervisor)
+            return null;
+        return $supervisor;
+    }
+    public function patientRelatedWithSessions($patient_id)
+    {
+        $patient=Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
+            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
+            ->where('patient_cases.patient_id', $patient_id)
+            ->select('sessions.*')
+            ->with('referrals.patientCases.patient')
+            ->get();
+
+        if(!$patient)
+            return null;
+        return $patient;
+    }
+
+
+
+
 }

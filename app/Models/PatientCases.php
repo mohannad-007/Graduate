@@ -8,13 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class PatientCases extends Model
 {
     use HasFactory;
-    protected $fillable= [
-        'details_of_cases',
-        'diagnosis_appointments_id',
-        'patient_id',
-        'student_id',
-        'types_of_cases_id',
-    ];
+//    protected $fillable= [
+//        'details_of_cases',
+//        'diagnosis_appointments_id',
+//        'patient_id',
+//        'student_id',
+//        'types_of_cases_id',
+//    ];
+    protected $guarded=[];
 
     public function patient()
     {
