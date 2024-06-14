@@ -21,13 +21,16 @@ use App\Http\Controllers\Patient\PatientProfileController;
 use App\Http\Controllers\Patient\PatientSessionController;
 use App\Http\Controllers\Patient\PatientTestResultsAfterDiagnosisController;
 use App\Http\Controllers\Section\SectionAuthController;
+use App\Http\Controllers\section\SectionPatientController;
 use App\Http\Controllers\Section\SectionProfileController;
 use App\Http\Controllers\Student\StudentAuthController;
 use App\Http\Controllers\Student\StudentDiagnosisCasesController;
 use App\Http\Controllers\Student\StudentPatientHealthRecordController;
+use App\Http\Controllers\Student\StudentPatientNowController;
 use App\Http\Controllers\Student\StudentPatientSessionsController;
 use App\Http\Controllers\Student\StudentPatientToolsRequiredController;
 use App\Http\Controllers\Student\StudentProfileController;
+use App\Http\Controllers\Student\StudentProfileViewController;
 use App\Http\Controllers\Student\StudentToolsRequiredController;
 use App\Http\Controllers\Supervisor\GetSupervisorClinicController;
 use App\Http\Controllers\Supervisor\PatientRelatedWithSessionsController;
@@ -110,6 +113,8 @@ Route::group(['middleware' => ['auth:sanctum', 'student']], function () {
         Route::get('studentPatientToolsRequired', [StudentPatientToolsRequiredController::class, 'studentPatientToolsRequired']);
         Route::get('studentPatientSessions', [StudentPatientSessionsController::class, 'studentPatientSessions']);
         Route::get('studentAppointments', [StudentAppointmentController::class, 'studentAppointments']);
+        Route::get('studentProfileView', [StudentProfileViewController::class, 'studentProfileView']);
+        Route::get('studentPatientNow', [StudentPatientNowController::class, 'studentPatientNow']);
     });
 });
 //////////////////////////////////////////////////////////////////////////////////
@@ -207,6 +212,7 @@ Route::group(['middleware' => ['auth:sanctum', 'section']], function () {
     Route::prefix('/section/profile')->group(function ()
     {
         Route::post('edit', [SectionProfileController::class, 'edit']);
+        Route::get('showPatientsInCurrentChapter', [SectionPatientController::class, 'showPatientsInCurrentChapter']);
     });
 });
 //////////////////////////////////////////////////////////////////////////////////

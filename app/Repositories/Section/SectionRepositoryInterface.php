@@ -8,4 +8,5 @@ interface SectionRepositoryInterface
     public function edit($id, array $data);
     public function delete($id);
     public function login(array $data);
+    public function showPatientsInCurrentChapter($section,$chapter);
 }

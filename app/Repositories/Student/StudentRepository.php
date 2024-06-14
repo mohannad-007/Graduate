@@ -11,6 +11,7 @@ use App\Models\PatientTransferRequests;
 use App\Models\Radiographs;
 use App\Models\Referrals;
 use App\Models\RequiredOperations;
+use App\Models\Sections;
 use App\Models\Sessions;
 use App\Models\Student;
 use App\Models\TypesOfCases;
@@ -40,7 +41,7 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function sectionsView()
     {
-        return TypesOfCases::with('sections')->get();
+        return Sections::get();
     }
 
     public function convertFromSection()
@@ -163,6 +164,58 @@ class StudentRepository implements StudentRepositoryInterface
 
         return $data;
 
+    }
+    public function studentProfileView()
+    {
+        return auth()->user();
+    }
+    public function studentPatientNow()
+    {
+        $sectionConfirmedFinished = Referrals::where('student_id', auth()->user()->id)
+            ->where('type_of_refarrals','converted_from_section')
+            ->where('status_of_refarrals','confirmed')
+            ->where('status_done','finished')
+            ->with('patientCases.patient:id,first_name,last_name,email,gender,birthday,image')
+            ->get()
+            ->pluck('patientCases.patient')
+            ->unique('id');
+
+        $sectionConfirmedNotFinished = Referrals::where('student_id', auth()->user()->id)
+            ->where('type_of_refarrals', 'converted_from_section')
+            ->where('status_of_refarrals', 'confirmed')
+            ->where('status_done', 'not_finished')
+            ->with('patientCases.patient:id,first_name,last_name,email,gender,birthday,image')
+            ->get()
+            ->pluck('patientCases.patient')
+            ->unique('id');
+
+        $studentConfirmedFinished = Referrals::where('student_id', auth()->user()->id)
+            ->where('type_of_refarrals', 'converted_from_student')
+            ->where('status_of_refarrals', 'confirmed')
+            ->where('status_done', 'finished')
+            ->with('patientCases.patient:id,first_name,last_name,email,gender,birthday,image')
+            ->get()
+            ->pluck('patientCases.patient')
+            ->unique('id');
+
+        $studentConfirmedNotFinished = Referrals::where('student_id', auth()->user()->id)
+            ->where('type_of_refarrals', 'converted_from_student')
+            ->where('status_of_refarrals', 'confirmed')
+            ->where('status_done', 'not_finished')
+            ->with('patientCases.patient:id,first_name,last_name,email,gender,birthday,image')
+            ->get()
+            ->pluck('patientCases.patient')
+            ->unique('id');
+
+        $allPatients = $sectionConfirmedFinished
+            ->merge($sectionConfirmedNotFinished)
+            ->merge($studentConfirmedFinished)
+            ->merge($studentConfirmedNotFinished)
+            ->unique('id');
+
+        return [
+            $allPatients
+        ];
     }
 
 

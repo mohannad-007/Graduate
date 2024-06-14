@@ -62,4 +62,13 @@ class SectionService
         }
         return  $this->resourceCreatedResponse(['token'=>$token],"Section Login Successful");
     }
+    public function showPatientsInCurrentChapter($section, $chapter)
+    {
+
+        $section=$this->sectionRepository->showPatientsInCurrentChapter($section, $chapter);
+        if (!$section) {
+            throw new HttpResponseException($this->notFoundResponse('Patients Not Found in this '));
+        }
+        return  $this->successResponse(data:$section,message: "Patients in Current Chapter");
+    }
 }

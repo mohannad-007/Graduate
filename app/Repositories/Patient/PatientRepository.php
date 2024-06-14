@@ -79,23 +79,31 @@ class PatientRepository implements  PatientRepositoryInterface
 
     public function viseted($patient_id){
 
-        DiagnosisAppointments::where('date','<',Carbon::now()->startOfDay())
+        DiagnosisAppointments::where('date','<',Carbon::today())
             ->where('order_status','done_diagnosis')
+            ->where('patient_id',$patient_id)
             ->delete();
+
         $data['diagnosisAppointments'] = DiagnosisAppointments::where('patient_id', $patient_id)
             ->where('order_status','done_diagnosis')
+            ->where('date','>=',Carbon::today())
             ->get();
 
 
-        Sessions::where('history','<',Carbon::now()->startOfDay())
+        Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
+            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
+            ->where('patient_cases.patient_id', $patient_id)
+            ->where('history','<',Carbon::today())
             ->where(function ($query) {
                 $query->where('status_of_session', 'complete')
                     ->orWhere('status_of_session', 'last_refarral');
                 })
             ->delete();
+
         $data['sessions'] = Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
             ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
             ->where('patient_cases.patient_id', $patient_id)
+            ->where('history','>=',Carbon::today())
             ->where(function ($query) {
                 $query->where('status_of_session', 'complete')
                     ->orWhere('status_of_session', 'last_refarral');
@@ -125,20 +133,30 @@ class PatientRepository implements  PatientRepositoryInterface
 
     public function myAppointment($patient_id){
 
-        DiagnosisAppointments::where('date','<',Carbon::now()->startOfDay())
+        DiagnosisAppointments::where('date','<',Carbon::today())
             ->where('order_status','done_diagnosis')
+            ->where('patient_id',$patient_id)
             ->delete();
-        $data['diagnosisAppointments'] = DiagnosisAppointments::where('patient_id', $patient_id)
-            ->where('order_status','acceptable')
+
+        $data['diagnosisAppointments'] = DiagnosisAppointments::where([
+            'patient_id'=>$patient_id,
+            'order_status'=>'acceptable',
+        ])
+            ->where('date','>=',Carbon::today())
+            ->with('student','diagnosis')
             ->get();
 
 
-        Sessions::where('history','<',Carbon::now()->startOfDay())
+        Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
+            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
+            ->where('patient_cases.patient_id',$patient_id)
+            ->where('history','<',Carbon::today())
             ->where(function ($query) {
                 $query->where('status_of_session', 'complete')
                     ->orWhere('status_of_session', 'last_refarral');
                 })
             ->delete();
+
         $data['sessions'] = Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
             ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
             ->where('patient_cases.patient_id', $patient_id)
@@ -202,20 +220,26 @@ class PatientRepository implements  PatientRepositoryInterface
     }
     public function patientRelatedWithStudent($patientId){
 
-        $student=Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
-            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
-            ->where('patient_cases.patient_id', $patientId)
-            ->select('sessions.*')
-            ->with('referrals.student')
-            ->get();
+//        $student=Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
+//            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
+//            ->where('patient_cases.patient_id', $patientId)
+//            ->select('sessions.*')
+//            ->with('referrals.student')
+//            ->get();
 
-        $student2=DiagnosisAppointments::where('patient_id', $patientId)
-            ->with('student')
-            ->get();
+//        $student2=DiagnosisAppointments::where('patient_id', $patientId)
+//            ->with('student')
+//            ->get();
+
+        $patientCases = PatientCases::with('student')->where('patient_id', $patientId)->get();
+
+        // استخراج معلومات الطلاب المرتبطين بالحالات
+        $students = $patientCases->pluck('student')->unique('id');
 
         return [
-            'Patient related with student'=>$student,
-            'Patient related with student2'=>$student2,
+//            'Patient related with student'=>$student,
+//            'Patient related with student2'=>$student2,
+            $students
         ];
     }
 

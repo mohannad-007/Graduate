@@ -144,4 +144,23 @@ class StudentService
         }
         return  $this->resourceFoundResponse(data: $student,message: "My Appointments");
     }
+    public function studentProfileView()
+    {
+        $student=$this->studentRepository->studentProfileView();
+        if (!$student)
+        {
+            throw new HttpResponseException($this->internalErrorResponse('Not Found Profile!'));
+        }
+        return  $this->resourceFoundResponse(data: $student,message: "Profile");
+    }
+    public function studentPatientNow()
+    {
+        $patient = $this->studentRepository->studentPatientNow();
+        if (!$patient) {
+            throw new HttpResponseException($this->internalErrorResponse('Not Found Patient!'));
+        }
+        return $this->resourceFoundResponse(data: $patient, message: "Patients");
+
+
+    }
 }

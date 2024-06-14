@@ -17,4 +17,6 @@ interface StudentRepositoryInterface
     public function studentPatientToolsRequired($patientId,$sessionId);
     public function studentPatientSessions($patientId);
     public function studentAppointments($history);
+    public function studentProfileView();
+    public function studentPatientNow();
 }
