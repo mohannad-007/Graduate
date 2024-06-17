@@ -14,6 +14,7 @@ use App\Models\RequiredOperations;
 use App\Models\Sections;
 use App\Models\Sessions;
 use App\Models\Student;
+use App\Models\StudentLaboratoryTools;
 use App\Models\TypesOfCases;
 use App\Traits\RespondsWithHttpStatus;
 use Illuminate\Support\Facades\Hash;
@@ -216,6 +217,27 @@ class StudentRepository implements StudentRepositoryInterface
         return [
             $allPatients
         ];
+    }
+    public function addTools($details_of_tool,$image_tool)
+    {
+        $tools= StudentLaboratoryTools::create([
+            'student_id' => auth()->user()->id,
+            'details_of_tool'=>$details_of_tool,
+            'image_tool'=>$image_tool
+        ]);
+        return [
+            'id'=>$tools['id'],
+            'details_of_tool'=>$tools['details_of_tool'],
+            'image_tool'=>$tools['image_tool'],
+        ];
+    }
+    public function getTools()
+    {
+        return StudentLaboratoryTools::where('student_id',auth()->id())->get();
+    }
+    public function destroyTools($id)
+    {
+        return StudentLaboratoryTools::where('id',$id)->delete();
     }
 
 

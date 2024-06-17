@@ -25,6 +25,7 @@ use App\Http\Controllers\section\SectionPatientController;
 use App\Http\Controllers\Section\SectionProfileController;
 use App\Http\Controllers\Student\StudentAuthController;
 use App\Http\Controllers\Student\StudentDiagnosisCasesController;
+use App\Http\Controllers\Student\StudentImportantToolsController;
 use App\Http\Controllers\Student\StudentPatientHealthRecordController;
 use App\Http\Controllers\Student\StudentPatientNowController;
 use App\Http\Controllers\Student\StudentPatientSessionsController;
@@ -115,6 +116,9 @@ Route::group(['middleware' => ['auth:sanctum', 'student']], function () {
         Route::get('studentAppointments', [StudentAppointmentController::class, 'studentAppointments']);
         Route::get('studentProfileView', [StudentProfileViewController::class, 'studentProfileView']);
         Route::get('studentPatientNow', [StudentPatientNowController::class, 'studentPatientNow']);
+        Route::post('addTools', [StudentImportantToolsController::class, 'addTools']);
+        Route::get('getTools', [StudentImportantToolsController::class, 'getTools']);
+        Route::get('destroyTools', [StudentImportantToolsController::class, 'destroyTools']);
     });
 });
 //////////////////////////////////////////////////////////////////////////////////

@@ -19,4 +19,7 @@ interface StudentRepositoryInterface
     public function studentAppointments($history);
     public function studentProfileView();
     public function studentPatientNow();
+    public function addTools($details_of_tool,$image_tool);
+    public function getTools();
+    public function destroyTools($id);
 }

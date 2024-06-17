@@ -69,6 +69,10 @@ class Student extends Authenticatable
     {
         return $this->hasMany(DiagnosisAppointments::class);
     }
+    public function studentLaboratoryTools()
+    {
+        return $this->hasMany(StudentLaboratoryTools::class);
+    }
 
 
 

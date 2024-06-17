@@ -160,7 +160,31 @@ class StudentService
             throw new HttpResponseException($this->internalErrorResponse('Not Found Patient!'));
         }
         return $this->resourceFoundResponse(data: $patient, message: "Patients");
-
-
     }
+    public function addTools($details_of_tool,$image_tool)
+    {
+        $tools = $this->studentRepository->addTools($details_of_tool,$image_tool);
+        if (!$tools) {
+            throw new HttpResponseException($this->internalErrorResponse('Not Found Tools!'));
+        }
+        return $this->resourceFoundResponse(data: $tools, message: "Tools Created Successfully");
+    }
+    public function getTools()
+    {
+        $gettools = $this->studentRepository->getTools();
+        if (!$gettools) {
+            throw new HttpResponseException($this->internalErrorResponse('Not Found Tools!'));
+        }
+        return $this->resourceFoundResponse(data: $gettools, message: "Tools Found");
+    }
+    public function destroyTools($id)
+    {
+        $destroyTools = $this->studentRepository->destroyTools($id);
+        if (!$destroyTools) {
+            throw new HttpResponseException($this->internalErrorResponse('Not Found Tools!'));
+        }
+        return $this->resourceFoundResponse(data: $destroyTools, message: "Tools Deleted Successfully");
+    }
+
+
 }

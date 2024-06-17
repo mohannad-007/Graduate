@@ -9,7 +9,6 @@ class LaboratoryToolsRequired extends Model
 {
     use HasFactory;
     protected $guarded=[];
-//    protected $fillable= ['image_tool','details_of_tool','student_id','patient_id'];
 
     public function patient()
     {
@@ -22,5 +21,9 @@ class LaboratoryToolsRequired extends Model
     public function sessions()
     {
         return $this->belongsTo(Sessions::class,'session_id');
+    }
+    public function StudentLaboratoryTools()
+    {
+        return $this->belongsTo(StudentLaboratoryTools::class);
     }
 }

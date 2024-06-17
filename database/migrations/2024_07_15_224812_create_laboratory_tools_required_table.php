@@ -16,8 +16,7 @@ return new class extends Migration
             $table->bigInteger('patient_id')->unsigned();
             $table->bigInteger('student_id')->unsigned();
             $table->bigInteger('session_id')->unsigned();
-            $table->string('details_of_tool');
-            $table->string('image_tool');
+            $table->bigInteger('laboratoryTools_id')->unsigned();
             $table->softDeletes();
 
             $table->timestamps();
@@ -38,6 +37,12 @@ return new class extends Migration
                 ->foreign('session_id')
                 ->references('id')
                 ->on('sessions')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table
+                ->foreign('laboratoryTools_id')
+                ->references('id')
+                ->on('student_laboratory_tools')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
