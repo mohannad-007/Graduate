@@ -185,6 +185,46 @@ class StudentService
         }
         return $this->resourceFoundResponse(data: $destroyTools, message: "Tools Deleted Successfully");
     }
+    public function getClinicsBySectionId($id)
+    {
 
+        $clinics = $this->studentRepository->getClinicsBySectionId($id);
+
+        if (!$clinics) {
+
+            throw new HttpResponseException($this->internalErrorResponse('Not Found Clinics!'));
+
+        }
+
+        return $this->resourceFoundResponse(data: $clinics, message: "Clinics Found");
+    }
+
+    public function addSession(array $data)
+    {
+        $addSession=$this->studentRepository->addSession($data);
+        if (!$addSession)
+        {
+            throw new HttpResponseException($this->notFoundResponse('Not Found Sessions'));
+        }
+        return  $this->successResponse(data:$addSession,message:"My Sessions was Added");
+    }
+    public function updateSession(array $data)
+    {
+        $addSession=$this->studentRepository->updateSession($data);
+        if (!$addSession)
+        {
+            throw new HttpResponseException($this->notFoundResponse('Not Found Sessions'));
+        }
+        return  $this->successResponse(data:$addSession,message:"My Sessions was Updated");
+    }
+    public function tupeOfSections()
+    {
+        $sections=$this->studentRepository->tupeOfSections();
+        if (!$sections)
+        {
+            throw new HttpResponseException($this->notFoundResponse('Not Found Sections'));
+        }
+        return  $this->successResponse(data:$sections,message:"Type of Sections");
+    }
 
 }

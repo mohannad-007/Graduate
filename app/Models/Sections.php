@@ -13,6 +13,7 @@ class Sections extends Authenticatable
     use HasApiTokens;
 
     protected $guarded = [];
+    protected $hidden = ['password','created_at','updated_at'];
 //    protected $fillable=['name','details','email','password'];
 
     public function clinics()

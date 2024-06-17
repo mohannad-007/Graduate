@@ -8,6 +8,7 @@ interface StudentRepositoryInterface
     public function login(array $data);
     public function edit($id,array $data);
     public function sectionsView();
+    public function getClinicsBySectionId($id);
     public function convertFromSection();
     public function convertFromStudent();
     public function studentViewCases($typeId);
@@ -22,4 +23,8 @@ interface StudentRepositoryInterface
     public function addTools($details_of_tool,$image_tool);
     public function getTools();
     public function destroyTools($id);
+    public function addSession(array $data);
+    public function updateSession(array $data);
+    public function tupeOfSections();
+
 }

@@ -139,11 +139,11 @@ class StudentToolsRequiredController extends Controller
                     $createData = LaboratoryToolsRequired::create($toolsData);
                 }
             }
-        DB::commit(); // تأكيد المعاملة إذا نجحت جميع العمليات
+        DB::commit();
         return response()->json(['message' => 'Records created successfully'], 201);
         } catch (\Exception $e) {
-            DB::rollBack(); // التراجع عن المعاملة في حال فشل أي عملية
-            return response()->json(['error' => 'An error occurred in input ID'], 500);
+            DB::rollBack();
+            return response()->json(['error' => 'An error occurred in input ID',$e->getMessage()], 500);
         }
 
     }

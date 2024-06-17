@@ -9,4 +9,5 @@ interface SectionRepositoryInterface
     public function delete($id);
     public function login(array $data);
     public function showPatientsInCurrentChapter($section,$chapter);
+    public function getSections();
 }

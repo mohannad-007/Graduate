@@ -43,15 +43,6 @@ class SupervisorRepository implements  SupervisorRepositoryInterface
             return null;
         return $supervisor;
     }
-    public function getSessions()
-    {
-        $supervisor=Sessions::where('supervisor_id',auth()->user()->id)
-            ->with('supervisor','clinics','referrals')
-            ->get();
-        if(!$supervisor)
-            return null;
-        return $supervisor;
-    }
     public function sessionDetails($session_id)
     {
         $supervisor=Sessions::where('id',$session_id)
@@ -64,10 +55,19 @@ class SupervisorRepository implements  SupervisorRepositoryInterface
     public function addSessionNotes($session_id,$notes,$evaluation)
     {
         $supervisor=Sessions::where([
-            'id'=>$session_id,
-            'supervisor_id'=>auth()->user()->id
+            'id'=>$session_id
         ])
-            ->update(['supervisor_notes'=>$notes,'supervisor_evaluation'=>$evaluation]);
+            ->update(['supervisor_notes'=>$notes,'supervisor_evaluation'=>$evaluation,'supervisor_id'=>auth()->user()->id]);
+        if(!$supervisor)
+            return null;
+        return $supervisor;
+    }
+    public function getSessionsNotAssignment($clinic_id)
+    {
+        $supervisor=Sessions::where('clinic_id',$clinic_id)
+            ->where('supervisor_id',null)
+            ->with('clinics','referrals')
+            ->get();
         if(!$supervisor)
             return null;
         return $supervisor;
@@ -116,6 +116,18 @@ class SupervisorRepository implements  SupervisorRepositoryInterface
         if(!$patient)
             return null;
         return $patient;
+    }
+    public function getMySessions($clinic_id)
+    {
+        $supervisor=Sessions::where([
+            'clinic_id'=>$clinic_id,
+            'supervisor_id'=>auth()->user()->id
+        ])
+            ->with('clinics','referrals')
+            ->get();
+        if(!$supervisor)
+            return null;
+        return $supervisor;
     }
 
 

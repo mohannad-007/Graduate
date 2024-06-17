@@ -16,9 +16,13 @@ class SupervisorSessionsController extends Controller
 
     ){}
 
-    public function getSessions()
+    public function getSessionsNotAssignment(Request $request)
     {
-        return $this->supervisorService->getSessions();
+        return $this->supervisorService->getSessionsNotAssignment($request->clinic_id);
+    }
+    public function getMySessions(Request $request)
+    {
+        return $this->supervisorService->getMySessions($request->clinic_id);
     }
 
 }

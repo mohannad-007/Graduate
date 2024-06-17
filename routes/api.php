@@ -24,6 +24,7 @@ use App\Http\Controllers\Section\SectionAuthController;
 use App\Http\Controllers\section\SectionPatientController;
 use App\Http\Controllers\Section\SectionProfileController;
 use App\Http\Controllers\Student\StudentAuthController;
+use App\Http\Controllers\Student\StudentConvertToSectionController;
 use App\Http\Controllers\Student\StudentDiagnosisCasesController;
 use App\Http\Controllers\Student\StudentImportantToolsController;
 use App\Http\Controllers\Student\StudentPatientHealthRecordController;
@@ -32,6 +33,8 @@ use App\Http\Controllers\Student\StudentPatientSessionsController;
 use App\Http\Controllers\Student\StudentPatientToolsRequiredController;
 use App\Http\Controllers\Student\StudentProfileController;
 use App\Http\Controllers\Student\StudentProfileViewController;
+use App\Http\Controllers\Student\StudentSectionController;
+use App\Http\Controllers\Student\StudentSessionController;
 use App\Http\Controllers\Student\StudentToolsRequiredController;
 use App\Http\Controllers\Supervisor\GetSupervisorClinicController;
 use App\Http\Controllers\Supervisor\PatientRelatedWithSessionsController;
@@ -103,6 +106,7 @@ Route::group(['middleware' => ['auth:sanctum', 'student']], function () {
     {
         Route::post('edit', [StudentProfileController::class, 'edit']);
         Route::get('sectionsView', [StudentSectionsViewController::class, 'sectionsView']);
+        Route::get('getClinicsBySectionId', [StudentSectionsViewController::class, 'getClinicsBySectionId']);
         Route::get('convertFromSection', [StudentPatientViewController::class, 'convertFromSection']);
         Route::get('convertFromStudent', [StudentPatientViewController::class, 'convertFromStudent']);
         Route::post('updateHealthRecord', [StudentUpdateHealthRecordController::class, 'updateHealthRecord']);
@@ -119,6 +123,10 @@ Route::group(['middleware' => ['auth:sanctum', 'student']], function () {
         Route::post('addTools', [StudentImportantToolsController::class, 'addTools']);
         Route::get('getTools', [StudentImportantToolsController::class, 'getTools']);
         Route::get('destroyTools', [StudentImportantToolsController::class, 'destroyTools']);
+        Route::post('addSession', [StudentSessionController::class, 'addSession']);
+        Route::put('updateSession', [StudentSessionController::class, 'updateSession']);
+        Route::post('addPatientCases', [StudentConvertToSectionController::class, 'addPatientCases']);
+        Route::get('tupeOfSections', [StudentConvertToSectionController::class, 'tupeOfSections']);
     });
 });
 //////////////////////////////////////////////////////////////////////////////////
@@ -174,7 +182,8 @@ Route::group(['middleware' => ['auth:sanctum', 'supervisor']], function () {
     {
         Route::post('edit', [SupervisorProfileController::class, 'edit']);
         Route::get('getClinic', [GetSupervisorClinicController::class, 'getClinic']);
-        Route::get('getSessions', [SupervisorSessionsController::class, 'getSessions']);
+        Route::get('getSessionsNotAssignment', [SupervisorSessionsController::class, 'getSessionsNotAssignment']);
+        Route::get('getMySessions', [SupervisorSessionsController::class, 'getMySessions']);
         Route::get('sessionDetails', [SessionDetailsController::class, 'sessionDetails']);
         Route::put('addSessionNotes', [SessionDetailsController::class, 'addSessionNotes']);
         Route::get('studentInClinics', [StudetInCliniclsController::class, 'studentInClinics']);

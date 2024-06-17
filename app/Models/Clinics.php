@@ -9,7 +9,7 @@ class Clinics extends Model
 {
     use HasFactory;
     protected $fillable=['number','section_id'];
-
+    protected $hidden =['created_at','updated_at'];
     public function sections()
     {
         return $this->belongsTo(Sections::class,'section_id');

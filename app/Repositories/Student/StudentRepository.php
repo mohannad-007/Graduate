@@ -2,9 +2,11 @@
 
 namespace App\Repositories\Student;
 
+use App\Models\Clinics;
 use App\Models\DiagnosisAppointments;
 use App\Models\LaboratoryToolsRequired;
 use App\Models\Patient;
+use App\Models\PatientCases;
 use App\Models\PatientDisease;
 use App\Models\PatientMedication;
 use App\Models\PatientTransferRequests;
@@ -240,6 +242,38 @@ class StudentRepository implements StudentRepositoryInterface
         return StudentLaboratoryTools::where('id',$id)->delete();
     }
 
+    public function getClinicsBySectionId($id)
+    {
+        return Clinics::where('section_id',$id)->get();
+    }
+    public function addSession($data)
+    {
+        $session=Sessions::create([
+           'clinic_id'=>$data['clinic_id'],
+           'referrals_id'=>$data['referrals_id'],
+           'history'=>$data['history'],
+           'timeSession'=>$data['timeSession'],
+           'status_of_session'=> 'not_complete',
+        ]);
+
+        return $session;
+    }
+    public function updateSession($data)
+    {
+        $session=Sessions::find($data['session_id'])
+            ->update([
+                'status_of_session'=> $data['status_of_session'],
+                'student_notes'=> $data['student_notes'],
+        ]);
+
+        return $session;
+    }
+    public function tupeOfSections()
+    {
+        $sections=TypesOfCases::with('sections')->get();
+
+        return $sections;
+    }
 
 
 

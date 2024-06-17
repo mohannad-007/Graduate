@@ -77,59 +77,57 @@ class PatientRepository implements  PatientRepositoryInterface
         return $appointment;
     }
 
-    public function viseted($patient_id){
+//    public function viseted($patient_id){
 
-        DiagnosisAppointments::where('date','<',Carbon::today())
-            ->where('order_status','done_diagnosis')
-            ->where('patient_id',$patient_id)
-            ->delete();
+//        DiagnosisAppointments::where('date','<',Carbon::today())
+//            ->where('order_status','done_diagnosis')
+//            ->where('patient_id',$patient_id)
+//            ->delete();
+//
+//        $data['diagnosisAppointments'] = DiagnosisAppointments::where('patient_id', $patient_id)
+//            ->where('order_status','done_diagnosis')
+//            ->get();
 
-        $data['diagnosisAppointments'] = DiagnosisAppointments::where('patient_id', $patient_id)
-            ->where('order_status','done_diagnosis')
-            ->where('date','>=',Carbon::today())
-            ->get();
 
+//        Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
+//            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
+//            ->where('patient_cases.patient_id', $patient_id)
+//            ->where('history','<',Carbon::today())
+//            ->where(function ($query) {
+//                $query->where('status_of_session', 'complete')
+//                    ->orWhere('status_of_session', 'last_refarral');
+//                })
+//            ->delete();
+//
+//        $data['sessions'] = Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
+//            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
+//            ->where('patient_cases.patient_id', $patient_id)
+//            ->where(function ($query) {
+//                $query->where('status_of_session', 'complete')
+//                    ->orWhere('status_of_session', 'last_refarral');
+//                })
+//            ->select('sessions.*')
+//            ->with('supervisor','clinics.sections','referrals.patientCases')
+//            ->get();
 
-        Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
-            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
-            ->where('patient_cases.patient_id', $patient_id)
-            ->where('history','<',Carbon::today())
-            ->where(function ($query) {
-                $query->where('status_of_session', 'complete')
-                    ->orWhere('status_of_session', 'last_refarral');
-                })
-            ->delete();
-
-        $data['sessions'] = Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
-            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
-            ->where('patient_cases.patient_id', $patient_id)
-            ->where('history','>=',Carbon::today())
-            ->where(function ($query) {
-                $query->where('status_of_session', 'complete')
-                    ->orWhere('status_of_session', 'last_refarral');
-                })
-            ->select('sessions.*')
-            ->with('supervisor','clinics.sections','referrals.patientCases')
-            ->get();
-
-        return $data;
-    }
-    public function archiveVisited($patient_id){
-
-        $data['diagnosisAppointments'] = DiagnosisAppointments::where('patient_id', $patient_id)
-            ->onlyTrashed()
-            ->get();
-
-        $data['sessions'] = Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
-            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
-            ->where('patient_cases.patient_id', $patient_id)
-            ->select('sessions.*')
-            ->with('supervisor','clinics.sections','referrals.patientCases')
-            ->onlyTrashed()
-            ->get();
-
-        return $data;
-    }
+//        return $data;
+//    }
+//    public function archiveVisited($patient_id){
+//
+//        $data['diagnosisAppointments'] = DiagnosisAppointments::where('patient_id', $patient_id)
+//            ->onlyTrashed()
+//            ->get();
+//
+//        $data['sessions'] = Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
+//            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
+//            ->where('patient_cases.patient_id', $patient_id)
+//            ->select('sessions.*')
+//            ->with('supervisor','clinics.sections','referrals.patientCases')
+//            ->onlyTrashed()
+//            ->get();
+//
+//        return $data;
+//    }
 
     public function myAppointment($patient_id){
 

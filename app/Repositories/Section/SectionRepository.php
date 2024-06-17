@@ -35,7 +35,10 @@ class SectionRepository implements  SectionRepositoryInterface
             return null;
         return $section;
     }
-
+    public function getSections()
+    {
+        return Sections::all();
+    }
     public function showPatientsInCurrentChapter($section, $chapter)
     {
         $chapterPatients = PatientCases::whereHas('referrals', function ($query) use ($section, $chapter) {

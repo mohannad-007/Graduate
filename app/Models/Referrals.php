@@ -16,7 +16,7 @@ class Referrals extends Model
 //        'type_of_refarrals',
 //    ];
     protected $guarded=[];
-
+protected  $hidden = ['created_at','updated_at'];
     public function student()
     {
         return $this->belongsTo(Student::class);

@@ -23,7 +23,7 @@ class Supervisor extends Authenticatable
         'updated_at',
     ];
 
-
+protected  $hidden =['created_at','updated_at','password','remember_token'];
     public function student()
     {
         return $this->belongsTo(Student::class);

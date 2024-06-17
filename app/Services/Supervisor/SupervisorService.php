@@ -73,16 +73,17 @@ class SupervisorService
         }
         return  $this->successResponse(data:$supervisor,message:"Supervisor");
     }
-    public function getSessions()
+    public function getSessionsNotAssignment($clinic_id)
     {
 
-        $supervisor=$this->supervisorRepository->getSessions();
+        $supervisor=$this->supervisorRepository->getSessionsNotAssignment($clinic_id);
         if (!$supervisor)
         {
-            throw new HttpResponseException($this->notFoundResponse('NotFound Sessions'));
+            throw new HttpResponseException($this->notFoundResponse('Not Found Sessions'));
         }
-        return  $this->successResponse(data:$supervisor,message:"Supervisor Sessions");
+        return  $this->successResponse(data:$supervisor,message:" the Sessions was not Assign to Supervisors");
     }
+
     public function sessionDetails($session_id)
     {
 
@@ -133,6 +134,16 @@ class SupervisorService
         }
         return  $this->successResponse(data:$supervisor,message:"Patient Related Sessions ");
     }
+    public function getMySessions($clinic_id)
+    {
+        $supervisor=$this->supervisorRepository->getMySessions($clinic_id);
+        if (!$supervisor)
+        {
+            throw new HttpResponseException($this->notFoundResponse('Not Found Sessions'));
+        }
+        return  $this->successResponse(data:$supervisor,message:" My Sessions was Supervisor them");
+    }
+
 
 
 }

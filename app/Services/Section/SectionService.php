@@ -71,4 +71,17 @@ class SectionService
         }
         return  $this->successResponse(data:$section,message: "Patients in Current Chapter");
     }
+    public function getSections()
+    {
+
+        $section=$this->sectionRepository->getSections();
+
+        if (!$section) {
+
+            throw new HttpResponseException($this->notFoundResponse('Sections Not Found'));
+
+        }
+
+        return  $this->successResponse(data:$section,message: "Sections");
+    }
 }

@@ -7,21 +7,24 @@ use App\Services\Student\StudentService;
 use App\Traits\RespondsWithHttpStatus;
 use Illuminate\Http\Request;
 
-class StudentSectionsViewController extends Controller
+class StudentSessionController extends Controller
 {
+
     use RespondsWithHttpStatus;
     public function __construct(
         protected StudentService $userService
     ) {
     }
 
-    public function sectionsView(){
-
-        return $this->userService->sectionsView();
-    }
-    public function getClinicsBySectionId(Request $request)
+    public function addSession(Request $request)
     {
 
-        return $this->userService->getClinicsBySectionId($request->section_id);
+        return $this->userService->addSession($request->all());
     }
+    public function updateSession(Request $request)
+    {
+
+        return $this->userService->updateSession($request->all());
+    }
+
 }

@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('sessions', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('supervisor_id')->unsigned();
+            $table->bigInteger('supervisor_id')->unsigned()->nullable();
             $table->bigInteger('clinic_id')->unsigned();
             $table->bigInteger('referrals_id')->unsigned();
-            $table->integer('supervisor_evaluation');
-            $table->string('supervisor_notes');
+            $table->integer('supervisor_evaluation')->nullable();
+            $table->string('supervisor_notes')->nullable();
             $table->date('history');
             $table->time('timeSession');
-            $table->string('student_notes');
+            $table->string('student_notes')->nullable();
             $table->enum('status_of_session',['complete','not_complete','last_refarral','didnt_come']);
             $table->softDeletes();
             $table->timestamps();
