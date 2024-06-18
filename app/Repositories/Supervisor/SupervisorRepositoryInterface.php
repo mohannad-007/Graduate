@@ -19,4 +19,10 @@ interface SupervisorRepositoryInterface
     public function studentPatient($clinic_id);
     public function patientRelatedWithSessions($patient_id);
     public function getMySessions($clinic_id);
+    public function getMySections($id);
+    public function getClinicsBySectionId($section_id);
+    public function getSessionToday(array $data);
+    public function getPatientToday(array $data);
+    public function getStudentsRelatedPatient(array $data);
+    public function getSessionsRelatedPatientStudent(array $data);
 }

@@ -23,7 +23,7 @@ class Supervisor extends Authenticatable
         'updated_at',
     ];
 
-protected  $hidden =['created_at','updated_at','password','remember_token'];
+    protected  $hidden =['created_at','updated_at','password','remember_token'];
     public function student()
     {
         return $this->belongsTo(Student::class);
@@ -37,5 +37,28 @@ protected  $hidden =['created_at','updated_at','password','remember_token'];
     public function sessions()
     {
         return $this->hasMany(Sessions::class);
+    }
+    public function clinics()
+    {
+        return $this->hasManyThrough(
+            Clinics::class,
+            SupervisorTime::class,
+            'supervisor_id', // Foreign key on SupervisorTime table...
+            'id',            // Foreign key on Clinics table...
+            'id',            // Local key on Supervisors table...
+            'clinic_id'      // Local key on SupervisorTime table...
+        );
+    }
+
+    public function sections()
+    {
+        return $this->hasManyThrough(
+            Sections::class,
+            Clinics::class,
+            'id',            // Foreign key on Clinics table...
+            'section_id',    // Foreign key on Sections table...
+            'id',            // Local key on Supervisors table...
+            'id'             // Local key on Clinics table...
+        )->distinct();
     }
 }

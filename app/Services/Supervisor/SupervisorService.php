@@ -144,6 +144,64 @@ class SupervisorService
         return  $this->successResponse(data:$supervisor,message:" My Sessions was Supervisor them");
     }
 
+    public  function getMySections($id)
+    {
+        $supervisor=$this->supervisorRepository->getMySections($id);
+        if (!$supervisor)
+        {
+            throw new HttpResponseException($this->notFoundResponse('Not Found Sections'));
+        }
+        return  $this->successResponse(data:$supervisor,message:" My Sections was Supervisor them");
+    }
+    public  function getClinicsBySectionId($section_id)
+    {
+        $supervisor=$this->supervisorRepository->getClinicsBySectionId($section_id);
+        if (!$supervisor)
+        {
+            throw new HttpResponseException($this->notFoundResponse('Not Found Clinics'));
+        }
+        return  $this->successResponse(data:$supervisor,message:" The Clinics Related by Section");
+    }
+    public  function getSessionToday(array $data)
+    {
+        $session=$this->supervisorRepository->getSessionToday($data);
+        if (!$session)
+        {
+            throw new HttpResponseException($this->notFoundResponse('Not Found Session'));
+        }
 
+        return  $this->successResponse(data:$session,message:" The Session Related by Clinic ID");
+    }
+    public  function getPatientToday(array $data)
+    {
+        $patient=$this->supervisorRepository->getPatientToday($data);
+        if (!$patient)
+        {
+            throw new HttpResponseException($this->notFoundResponse('Not Found Patient'));
+        }
+
+        return  $this->successResponse(data:$patient,message:" The Patient");
+    }
+    public function getStudentsRelatedPatient(array $data)
+    {
+        $patient=$this->supervisorRepository->getStudentsRelatedPatient($data);
+        if (!$patient)
+        {
+            throw new HttpResponseException($this->notFoundResponse('Not Found Students'));
+        }
+
+        return  $this->successResponse(data:$patient,message:" The Students Related of the Patient");
+    }
+    public function getSessionsRelatedPatientStudent(array $data)
+    {
+        $patient=$this->supervisorRepository->getSessionsRelatedPatientStudent($data);
+        if (!$patient)
+        {
+            throw new HttpResponseException($this->notFoundResponse('Not Found Sessions'));
+        }
+
+        return  $this->successResponse(data:$patient,message:" The Sessions Related Between Patient and Student");
+    }
 
 }
+

@@ -43,6 +43,8 @@ use App\Http\Controllers\Supervisor\StudetInCliniclsController;
 use App\Http\Controllers\Supervisor\StudetPetientsController;
 use App\Http\Controllers\Supervisor\SupervisorAuthController;
 use App\Http\Controllers\Supervisor\SupervisorProfileController;
+use App\Http\Controllers\Supervisor\SupervisorSectionController;
+use App\Http\Controllers\Supervisor\SupervisorSessionController;
 use App\Http\Controllers\Supervisor\SupervisorSessionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -189,6 +191,13 @@ Route::group(['middleware' => ['auth:sanctum', 'supervisor']], function () {
         Route::get('studentInClinics', [StudetInCliniclsController::class, 'studentInClinics']);
         Route::get('studentPatient', [StudetPetientsController::class, 'studentPatient']);
         Route::get('patientRelatedWithSessions', [PatientRelatedWithSessionsController::class, 'patientRelatedWithSessions']);
+        Route::get('getMySections', [SupervisorSectionController::class, 'getMySections']);
+        Route::get('getClinicsBySectionId', [SupervisorSectionController::class, 'getClinicsBySectionId']);
+        Route::get('getSessionToday', [SupervisorSessionController::class, 'getSessionToday']);
+        Route::get('getPatientToday', [SupervisorSessionController::class, 'getPatientToday']);
+        Route::get('getStudentsRelatedPatient', [SupervisorSessionController::class, 'getStudentsRelatedPatient']);
+        Route::get('getSessionsRelatedPatientStudent', [SupervisorSessionController::class, 'getSessionsRelatedPatientStudent']);
+
     });
 });
 //////////////////////////////////////////////////////////////////////////////////

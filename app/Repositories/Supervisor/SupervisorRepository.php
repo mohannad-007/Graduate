@@ -3,6 +3,8 @@
 namespace App\Repositories\Supervisor;
 
 use App\Models\Admin;
+use App\Models\Clinics;
+use App\Models\Sections;
 use App\Models\Sessions;
 use App\Models\Student;
 use App\Models\Supervisor;
@@ -129,8 +131,70 @@ class SupervisorRepository implements  SupervisorRepositoryInterface
             return null;
         return $supervisor;
     }
+    public function getMySections($id)
+    {
+        $sections = Sections::join('clinics', 'sections.id', '=', 'clinics.section_id')
+            ->join('supervisor_times', 'clinics.id', '=', 'supervisor_times.clinic_id')
+            ->where('supervisor_times.supervisor_id', $id)
+            ->select('sections.*')
+            ->distinct()
+            ->get();
+
+        return $sections;
 
 
+    }
+    public function getClinicsBySectionId($section_id)
+    {
+        $clinics=Clinics::where('section_id',$section_id)->get();
+
+        return $clinics;
+    }
+    public function getSessionToday($data)
+    {
+        $session=Sessions::where([
+            'clinic_id'=>$data['clinic_id'],
+            'history'=>$data['history']
+        ])
+            ->get();
+
+        return $session;
+    }
+    public function getPatientToday($data)
+    {
+        $session=Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
+            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
+            ->join('patient', 'patient_cases.patient_id', '=', 'patient.id')
+            ->where([
+            'clinic_id'=>$data['clinic_id'],
+            'history'=>$data['history']
+            ])
+            ->select('patient.*')
+            ->get();
 
 
+        return $session;
+    }
+    public function getStudentsRelatedPatient(array $data)
+    {
+        $students = Student::join('referrals', 'student.id', '=', 'referrals.student_id')
+            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
+            ->join('sessions', 'referrals.id', '=', 'sessions.referrals_id')
+            ->where('patient_cases.patient_id', $data['patient_id'])
+            ->select('student.*')
+            ->distinct()
+            ->get();
+        return $students;
+    }
+    public function getSessionsRelatedPatientStudent(array $data)
+    {
+        $sessions = Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
+            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
+            ->where('patient_cases.patient_id',$data['patient_id'])
+            ->where('referrals.student_id',$data['student_id'])
+            ->select('sessions.*')
+            ->get();
+
+        return $sessions;
+    }
 }
