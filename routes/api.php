@@ -122,7 +122,7 @@ Route::group(['middleware' => ['auth:sanctum', 'student']], function () {
         Route::get('studentPatientNow', [StudentPatientNowController::class, 'studentPatientNow']);
         Route::post('addTools', [StudentImportantToolsController::class, 'addTools']);
         Route::get('getTools', [StudentImportantToolsController::class, 'getTools']);
-        Route::get('destroyTools', [StudentImportantToolsController::class, 'destroyTools']);
+        Route::delete('destroyTools', [StudentImportantToolsController::class, 'destroyTools']);
         Route::post('addSession', [StudentSessionController::class, 'addSession']);
         Route::put('updateSession', [StudentSessionController::class, 'updateSession']);
         Route::post('addPatientCases', [StudentConvertToSectionController::class, 'addPatientCases']);

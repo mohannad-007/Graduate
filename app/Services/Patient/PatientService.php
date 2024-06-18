@@ -93,24 +93,24 @@ class PatientService
         return $this->successResponse(data: $patient,message: "Patient book request Successful");
     }
 
-    public function viseted($patient_id){
-
-        $patient=$this->patientRepository->viseted($patient_id);
-        if (!$patient)
-        {
-            throw new HttpResponseException($this->notFoundResponse('User not Found!'));
-        }
-        return $this->successResponse(data: $patient,message: "Patient Viseted");
-    }
-    public function archiveVisited($patient_id){
-
-        $patient=$this->patientRepository->archiveVisited($patient_id);
-        if (!$patient)
-        {
-            throw new HttpResponseException($this->notFoundResponse('User not Found!'));
-        }
-        return $this->successResponse(data: $patient,message: "Patient Archive Visited");
-    }
+//    public function viseted($patient_id){
+//
+//        $patient=$this->patientRepository->viseted($patient_id);
+//        if (!$patient)
+//        {
+//            throw new HttpResponseException($this->notFoundResponse('User not Found!'));
+//        }
+//        return $this->successResponse(data: $patient,message: "Patient Viseted");
+//    }
+//    public function archiveVisited($patient_id){
+//
+//        $patient=$this->patientRepository->archiveVisited($patient_id);
+//        if (!$patient)
+//        {
+//            throw new HttpResponseException($this->notFoundResponse('User not Found!'));
+//        }
+//        return $this->successResponse(data: $patient,message: "Patient Archive Visited");
+//    }
 
     public function myAppointment($patient_id){
 

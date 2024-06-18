@@ -12,8 +12,8 @@ interface PatientRepositoryInterface
     public function patientSessionRelatedWithStudent($patient_id,$student_id);
 //    public function bookAppointment($patient_id,$reason);
     public function bookAppointment($data);
-    public function viseted($patient_id);
-    public function archiveVisited($patient_id);
+//    public function viseted($patient_id);
+//    public function archiveVisited($patient_id);
     public function myAppointment($patient_id);
     public function archiveMyAppointment($patient_id);
     public function toolsRequired($patient_id);

@@ -16,6 +16,7 @@ class SectionRepository implements  SectionRepositoryInterface
 {
     public function register(array $data)
     {
+        unset($data['image_av']);
         $data['password']=Hash::make($data['password']);
         $section=Sections::create($data);
         return $section;

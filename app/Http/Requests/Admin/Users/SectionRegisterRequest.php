@@ -33,6 +33,17 @@ class SectionRegisterRequest extends FormRequest
             'details' => 'required|string',
         ];
     }
+    public function prepareForValidation(): void
+    {
+        if ($this->hasFile('image_av')) {
+            $file = $this->file('image_av');
+            $filePath = $file->move(public_path('/images'), $file->getClientOriginalName());
+            $url = url('images/' . $file->getClientOriginalName());
+            $this->merge(['section_image' => $url]);
+        }
+        $this->request->remove('image_av');
+
+    }
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException($this->validationErrorResponse($validator->errors()));
