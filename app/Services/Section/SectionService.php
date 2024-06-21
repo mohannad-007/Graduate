@@ -12,7 +12,7 @@ class SectionService
     use RespondsWithHttpStatus;
 
     public function __construct(
-        protected   SectionRepositoryInterface $sectionRepository
+        protected SectionRepositoryInterface $sectionRepository
     )
     {
     }
@@ -28,16 +28,17 @@ class SectionService
         $sectionInfo = ['email' => $section['email'], 'token' => $token];
         return $this->resourceCreatedResponse($sectionInfo, "Section Register Successful");
     }
-    public function edit($id,array $data)
+
+    public function edit($id, array $data)
     {
-        $section=$this->sectionRepository->edit($id,$data);
-        if (!$section)
-        {
+        $section = $this->sectionRepository->edit($id, $data);
+        if (!$section) {
             throw new HttpResponseException($this->internalErrorResponse('The Section Profile Cannot be Edited!'));
         }
-        return  $this->resourceCreatedResponse(message: "Section Profile Edited Successful");
+        return $this->resourceCreatedResponse(message: "Section Profile Edited Successful");
 
     }
+
     public function delete($id)
     {
         $section = $this->sectionRepository->delete($id);
@@ -50,31 +51,31 @@ class SectionService
     public function login(array $data)
     {
 
-        $section=$this->sectionRepository->login($data);
-        if (!$section)
-        {
+        $section = $this->sectionRepository->login($data);
+        if (!$section) {
             throw new HttpResponseException($this->unauthorizedResponse('Invalid Password!'));
         }
-        $token=$section->createToken('$section-token', ['actAsSection'])->plainTextToken;
-        if (!$token)
-        {
+        $token = $section->createToken('$section-token', ['actAsSection'])->plainTextToken;
+        if (!$token) {
             throw new HttpResponseException($this->internalErrorResponse('The Section Cannot be logged in!'));
         }
-        return  $this->resourceCreatedResponse(['token'=>$token],"Section Login Successful");
+        return $this->resourceCreatedResponse(['token' => $token], "Section Login Successful");
     }
+
     public function showPatientsInCurrentChapter($section, $chapter)
     {
 
-        $section=$this->sectionRepository->showPatientsInCurrentChapter($section, $chapter);
+        $section = $this->sectionRepository->showPatientsInCurrentChapter($section, $chapter);
         if (!$section) {
             throw new HttpResponseException($this->notFoundResponse('Patients Not Found in this '));
         }
-        return  $this->successResponse(data:$section,message: "Patients in Current Chapter");
+        return $this->successResponse(data: $section, message: "Patients in Current Chapter");
     }
+
     public function getSections()
     {
 
-        $section=$this->sectionRepository->getSections();
+        $section = $this->sectionRepository->getSections();
 
         if (!$section) {
 
@@ -82,6 +83,30 @@ class SectionService
 
         }
 
-        return  $this->successResponse(data:$section,message: "Sections");
+        return $this->successResponse(data: $section, message: "Sections");
+    }
+
+    public function addReferralToStudent($student_id, $patient_cases_id)
+    {
+        $section = $this->sectionRepository->addReferralToStudent($student_id, $patient_cases_id);
+        if (!$section) {
+
+            throw new HttpResponseException($this->notFoundResponse('Cannot be Added Referral!'));
+
+        }
+
+        return $this->successResponse(data: $section, message: "Referral Added Successfully");
+    }
+
+    public function addTypeOfCases($type)
+    {
+
+        $section = $this->sectionRepository->addTypeOfCases($type);
+        if (!$section) {
+
+            throw new HttpResponseException($this->notFoundResponse('Cannot be Added Type Of Cases!'));
+
+        }
+        return $this->successResponse(data: $section, message: "Type Of Cases Added Successfully");
     }
 }

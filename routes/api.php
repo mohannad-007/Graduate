@@ -21,8 +21,10 @@ use App\Http\Controllers\Patient\PatientProfileController;
 use App\Http\Controllers\Patient\PatientSessionController;
 use App\Http\Controllers\Patient\PatientTestResultsAfterDiagnosisController;
 use App\Http\Controllers\Section\SectionAuthController;
+use App\Http\Controllers\Section\SectionCasesController;
 use App\Http\Controllers\section\SectionPatientController;
 use App\Http\Controllers\Section\SectionProfileController;
+use App\Http\Controllers\Section\SectionStudentController;
 use App\Http\Controllers\Student\StudentAuthController;
 use App\Http\Controllers\Student\StudentConvertToSectionController;
 use App\Http\Controllers\Student\StudentDiagnosisCasesController;
@@ -235,6 +237,8 @@ Route::group(['middleware' => ['auth:sanctum', 'section']], function () {
     {
         Route::post('edit', [SectionProfileController::class, 'edit']);
         Route::get('showPatientsInCurrentChapter', [SectionPatientController::class, 'showPatientsInCurrentChapter']);
+        Route::post('addReferralToStudent', [SectionStudentController::class, 'addReferralToStudent']);
+        Route::post('addTypeOfCases', [SectionCasesController::class, 'addTypeOfCases']);
     });
 });
 //////////////////////////////////////////////////////////////////////////////////

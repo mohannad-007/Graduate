@@ -108,4 +108,25 @@ class SectionRepository implements  SectionRepositoryInterface
             return null;
         return $chapterPatients;
     }
+    public function addReferralToStudent($student_id,$patient_cases_id)
+    {
+        $data=[];
+        $data['student_id']=$student_id;
+        $data['patient_cases_id']=$patient_cases_id;
+        $data['type_of_refarrals']='converted_from_section';
+        $data['status_done']='not_finished';
+
+        $referral=Referrals::create($data);
+        return $referral;
+    }
+    public function addTypeOfCases($type)
+    {
+        $data=[];
+        $data['type']=$type;
+        $data['section_id']=auth()->user()->id;
+        $typeOfCases=TypesOfCases::create($data);
+        return $typeOfCases;
+    }
 }
+
+
