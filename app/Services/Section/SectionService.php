@@ -109,4 +109,17 @@ class SectionService
         }
         return $this->successResponse(data: $section, message: "Type Of Cases Added Successfully");
     }
+    public function  addSuperVisorTimeToClinic(array $data)
+    {
+
+        $section = $this->sectionRepository->addSuperVisorTimeToClinic($data);
+        if (!$section) {
+
+            throw new HttpResponseException($this->internalErrorResponse('Cannot be Added SuperVisor Time To Clinic!'));
+
+        }
+        return $this->resourceCreatedResponse(data: $section, message: "SuperVisor Time To Clinic Added Successfully");
+    }
+
+
 }

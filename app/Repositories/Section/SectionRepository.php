@@ -9,6 +9,7 @@ use App\Models\Referrals;
 use App\Models\RequiredOperations;
 use App\Models\Sections;
 use App\Models\Student;
+use App\Models\SupervisorTime;
 use App\Models\TypesOfCases;
 use Illuminate\Support\Facades\Hash;
 
@@ -126,6 +127,11 @@ class SectionRepository implements  SectionRepositoryInterface
         $data['section_id']=auth()->user()->id;
         $typeOfCases=TypesOfCases::create($data);
         return $typeOfCases;
+    }
+    public function  addSuperVisorTimeToClinic(array $data)
+    {
+        $supervisorTime=SupervisorTime::create($data);
+        return $supervisorTime;
     }
 }
 
