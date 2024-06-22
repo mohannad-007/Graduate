@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void //الادوات المخبرية المطلوبة
     {
-        Schema::create('laboratory_tools_requireds', function (Blueprint $table) {
+        Schema::create('laboratory_tools_required', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('patient_id')->unsigned();
             $table->bigInteger('student_id')->unsigned();

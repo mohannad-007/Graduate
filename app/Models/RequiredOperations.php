@@ -18,6 +18,10 @@ class RequiredOperations extends Model
     {
         return $this->belongsTo(TypesOfCases::class);
     }
+    public function referralRequiredOperation()
+    {
+        return $this->hasMany(ReferralRequiredOperation::class);
+    }
 
 
 }

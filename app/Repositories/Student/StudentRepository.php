@@ -10,7 +10,9 @@ use App\Models\PatientCases;
 use App\Models\PatientDisease;
 use App\Models\PatientMedication;
 use App\Models\PatientTransferRequests;
+use App\Models\PreexistingDisease;
 use App\Models\Radiographs;
+use App\Models\ReferralRequiredOperation;
 use App\Models\Referrals;
 use App\Models\RequiredOperations;
 use App\Models\Sections;
@@ -19,6 +21,7 @@ use App\Models\Student;
 use App\Models\StudentLaboratoryTools;
 use App\Models\TypesOfCases;
 use App\Traits\RespondsWithHttpStatus;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 class StudentRepository implements StudentRepositoryInterface
@@ -62,10 +65,9 @@ class StudentRepository implements StudentRepositoryInterface
             ->get();
     }
 
-    public function studentViewCases($typeId)
+    public function studentViewCases()
     {
-
-        return RequiredOperations::where('types_of_cases_id',$typeId)
+        return RequiredOperations::where('student_id',auth()->id())
             ->with('typesOfCases.sections')
             ->get();
     }
@@ -92,7 +94,6 @@ class StudentRepository implements StudentRepositoryInterface
             $refferalsNew,
             $patientTransferRequest
         ];
-
     }
 
     public function studentDiagnosisCases()
@@ -104,7 +105,6 @@ class StudentRepository implements StudentRepositoryInterface
         return [
           $studentCases
         ];
-
     }
     public function studentPatientHealthRecord($patientId)
     {
@@ -130,8 +130,8 @@ class StudentRepository implements StudentRepositoryInterface
     {
         $studentTools = LaboratoryToolsRequired::where('patient_id',$patientId)
             ->where('session_id',$sessionId)
-            ->where('student_id',auth()->user()->id)
-            ->with('patient','sessions')
+            ->where('student_id',auth()->id())
+            ->with('patient','sessions','studentLaboratoryTools')
             ->get();
 
         return $studentTools;
@@ -151,18 +151,12 @@ class StudentRepository implements StudentRepositoryInterface
     }
     public function studentAppointments($history)
     {
-//        $data['sessions'] = Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
-//            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
-//            ->where('patient_cases.patient_id', $patientId)
-//            ->select('sessions.*')
-//            ->with('supervisor','clinics.sections','referrals.patientCases')
-//            ->get();
-
         $data=Sessions::join('referrals', 'sessions.referrals_id', '=', 'referrals.id')
+            ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
+            ->join('patient', 'patient_cases.patient_id', '=', 'patient.id')
             ->where('history',$history)
             ->where('referrals.student_id', auth()->user()->id)
-            ->select('sessions.*')
-            ->with('supervisor','clinics.sections','referrals.patientCases')
+            ->select('patient.*')
             ->get();
 
         return $data;
@@ -271,10 +265,44 @@ class StudentRepository implements StudentRepositoryInterface
     public function tupeOfSections()
     {
         $sections=TypesOfCases::with('sections')->get();
-
         return $sections;
     }
+    public function viewDisease()
+    {
+        return PreexistingDisease::get();
+    }
+    public function allStudentView()
+    {
+        return Student::get();
+    }
+    public function viewMyReferrals()
+    {
+        return Referrals::where('student_id',auth()->id())->get();
+    }
+    public function acceptMyReferral($referral_id)
+    {
+         Referrals::where(['id'=>$referral_id,'student_id'=>auth()->id()])->update([
+            'status_of_refarrals'=>'confirmed'
+        ]);
 
-
-
+        $patientCase = PatientCases::join('referrals', 'patient_cases.id', '=', 'referrals.patient_cases_id')
+            ->where('referrals.id', $referral_id)
+            ->select('patient_cases.*')
+            ->first();
+        $requiredOperations=RequiredOperations::where(
+            ['types_of_cases_id'=>$patientCase->types_of_cases_id,
+            'student_id'=>auth()->id()
+            ])->first();
+        $referral_required_operation=ReferralRequiredOperation::create([
+            'referral_id'=>$referral_id,
+            'required_operation_id'=>$requiredOperations->id,
+            'date'=>Carbon::today()]);
+        return $referral_required_operation;
+    }
+    public function rejectMyReferral($referral_id)
+    {
+        return Referrals::where(['id'=>$referral_id,'student_id'=>auth()->id()])->update([
+            'status_of_refarrals'=>'sorry'
+        ]);
+    }
 }

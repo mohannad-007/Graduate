@@ -16,7 +16,7 @@ return new class extends Migration
             $table->bigInteger('student_id')->unsigned();
             $table->bigInteger('patient_cases_id')->unsigned();
             $table->enum('type_of_refarrals',['converted_from_section','converted_from_student']);
-            $table->enum('status_of_refarrals',['confirmed','sorry']);
+            $table->enum('status_of_refarrals',['confirmed','sorry','before_confirmation']);
             $table->enum('status_done',['finished','not_finished']);
             $table->timestamps();
 

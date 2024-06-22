@@ -183,13 +183,13 @@ class PatientRepository implements  PatientRepositoryInterface
         return $data;
     }
 
-    public function toolsRequired($patient_id){
+    public function toolsRequireds($patient_id){
 
-        $tools=LaboratoryToolsRequired::join('sessions','laboratory_tools_requireds.session_id','=','sessions.id')
-            ->where('sessions.history','>=',Carbon::now()->startOfDay())
+        $tools=LaboratoryToolsRequired::join('sessions','laboratory_tools_required.session_id','=','sessions.id')
+            ->where('sessions.history','>=',Carbon::today())
             ->where('patient_id',$patient_id)
-            ->select('laboratory_tools_requireds.*')
-            ->with('student','sessions')
+            ->select('laboratory_tools_required.*')
+            ->with('studentLaboratoryTools','student')
             ->get();
 
         return $tools;

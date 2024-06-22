@@ -19,15 +19,15 @@ class StudentSendPatientController extends Controller
 
     public function studentViewCases(Request $request){
 
-        $validator = Validator::make($request->all(), [
-         'types_of_cases_id'=>'required'
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
-        }
-         $typeId=$request->input('types_of_cases_id');
+//        $validator = Validator::make($request->all(), [
+//         'types_of_cases_id'=>'required'
+//        ]);
+//        if ($validator->fails()) {
+//            return response()->json(['errors' => $validator->errors()], 400);
+//        }
+//         $typeId=$request->input('types_of_cases_id');
 
-        return $this->userService->studentViewCases($typeId);
+        return $this->userService->studentViewCases();
     }
 
     public function studentSendCases(Request $request){

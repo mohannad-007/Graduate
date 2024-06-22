@@ -81,9 +81,9 @@ class StudentService
         }
         return  $this->resourceFoundResponse(data: $student,message: "Patient");
     }
-    public function studentViewCases($typeId)
+    public function studentViewCases()
     {
-        $student=$this->studentRepository->studentViewCases($typeId);
+        $student=$this->studentRepository->studentViewCases();
         if (!$student)
         {
             throw new HttpResponseException($this->internalErrorResponse('Not Found type of cases!'));
@@ -226,5 +226,49 @@ class StudentService
         }
         return  $this->successResponse(data:$sections,message:"Type of Sections");
     }
-
+    public function viewDisease()
+    {
+        $diseases=$this->studentRepository->viewDisease();
+        if (!$diseases)
+        {
+            throw new HttpResponseException($this->notFoundResponse('Not Found Diseases'));
+        }
+        return  $this->successResponse(data:$diseases,message:"Diseases");
+    }
+    public function allStudentView()
+    {
+        $student=$this->studentRepository->allStudentView();
+        if (!$student)
+        {
+            throw new HttpResponseException($this->notFoundResponse('Not Found Student'));
+        }
+        return  $this->successResponse(data:$student,message:"Students");
+    }
+    public function viewMyReferrals()
+    {
+        $student=$this->studentRepository->viewMyReferrals();
+        if (!$student)
+        {
+            throw new HttpResponseException($this->notFoundResponse('Not Found Referrals'));
+        }
+        return  $this->successResponse(data:$student,message:"Referrals");
+    }
+    public function acceptMyReferral($referral_id)
+    {
+        $accept=$this->studentRepository->acceptMyReferral($referral_id);
+        if (!$accept)
+        {
+            throw new HttpResponseException($this->notFoundResponse('Not Found '));
+        }
+        return  $this->successResponse(data:$accept,message:"Accepted");
+    }
+    public function rejectMyReferral($referral_id)
+    {
+        $accept=$this->studentRepository->rejectMyReferral($referral_id);
+        if (!$accept)
+        {
+            throw new HttpResponseException($this->notFoundResponse('Not Found '));
+        }
+        return  $this->successResponse(data:$accept,message:"Rejected");
+    }
 }

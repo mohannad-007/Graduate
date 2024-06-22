@@ -23,6 +23,7 @@ class StudentAppointmentController extends Controller
         $history=$request->history;
 //        $d=Carbon::parse($history)->toDateString();
 //        dd($d);
+//        dd($history);
         $data = $this->userService->studentAppointments($history);
         return $data;
     }

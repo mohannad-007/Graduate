@@ -115,6 +115,7 @@ class SectionRepository implements  SectionRepositoryInterface
         $data['student_id']=$student_id;
         $data['patient_cases_id']=$patient_cases_id;
         $data['type_of_refarrals']='converted_from_section';
+        $data['status_of_refarrals']='before_confirmation';
         $data['status_done']='not_finished';
 
         $referral=Referrals::create($data);

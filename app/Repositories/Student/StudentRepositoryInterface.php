@@ -11,7 +11,7 @@ interface StudentRepositoryInterface
     public function getClinicsBySectionId($id);
     public function convertFromSection();
     public function convertFromStudent();
-    public function studentViewCases($typeId);
+    public function studentViewCases();
     public function studentSendCases($studentId,$patientCasesId,$note);
     public function studentDiagnosisCases();
     public function studentPatientHealthRecord($patientId);
@@ -26,5 +26,10 @@ interface StudentRepositoryInterface
     public function addSession(array $data);
     public function updateSession(array $data);
     public function tupeOfSections();
+    public function viewDisease();
+    public function allStudentView();
+    public function viewMyReferrals();
+    public function acceptMyReferral($referral_id);
+    public function rejectMyReferral($referral_id);
 
 }

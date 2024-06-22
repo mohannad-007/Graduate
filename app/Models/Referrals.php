@@ -36,4 +36,8 @@ protected  $hidden = ['created_at','updated_at'];
     {
         return $this->hasMany(Sessions::class);
     }
+    public function referralRequiredOperation()
+    {
+        return $this->hasMany(ReferralRequiredOperation::class);
+    }
 }

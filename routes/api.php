@@ -26,9 +26,11 @@ use App\Http\Controllers\section\SectionPatientController;
 use App\Http\Controllers\Section\SectionProfileController;
 use App\Http\Controllers\Section\SectionStudentController;
 use App\Http\Controllers\Section\SectionSupervisorController;
+use App\Http\Controllers\Student\AllStudentViewController;
 use App\Http\Controllers\Student\StudentAuthController;
 use App\Http\Controllers\Student\StudentConvertToSectionController;
 use App\Http\Controllers\Student\StudentDiagnosisCasesController;
+use App\Http\Controllers\Student\StudentDiaseasController;
 use App\Http\Controllers\Student\StudentImportantToolsController;
 use App\Http\Controllers\Student\StudentPatientHealthRecordController;
 use App\Http\Controllers\Student\StudentPatientNowController;
@@ -36,6 +38,8 @@ use App\Http\Controllers\Student\StudentPatientSessionsController;
 use App\Http\Controllers\Student\StudentPatientToolsRequiredController;
 use App\Http\Controllers\Student\StudentProfileController;
 use App\Http\Controllers\Student\StudentProfileViewController;
+use App\Http\Controllers\Student\StudentReferralController;
+use App\Http\Controllers\Student\StudentSearchController;
 use App\Http\Controllers\Student\StudentSectionController;
 use App\Http\Controllers\Student\StudentSessionController;
 use App\Http\Controllers\Student\StudentToolsRequiredController;
@@ -93,7 +97,7 @@ Route::group(['middleware' => ['auth:sanctum', 'patient']], function () {
         Route::get('archiveVisited', [PatientVisetedController::class, 'archiveVisited']);
         Route::get('myAppointment', [PatientAppointmentController::class, 'myAppointment']);
         Route::get('archiveMyAppointment', [PatientAppointmentController::class, 'archiveMyAppointment']);
-        Route::get('toolsRequired', [PatientToolsRequiredController::class, 'toolsRequired']);
+        Route::get('toolsRequireds', [PatientToolsRequiredController::class, 'toolsRequireds']);
         Route::get('viewDiseases', [HealthRecordController::class, 'viewDiseases']);
         Route::get('viewHealthRecord', [HealthRecordController::class, 'viewHealthRecord']);
         Route::get('patientRelatedWithStudent', [PatientRelatedWithStudentController::class, 'patientRelatedWithStudent']);
@@ -132,6 +136,12 @@ Route::group(['middleware' => ['auth:sanctum', 'student']], function () {
         Route::put('updateSession', [StudentSessionController::class, 'updateSession']);
         Route::post('addPatientCases', [StudentConvertToSectionController::class, 'addPatientCases']);
         Route::get('tupeOfSections', [StudentConvertToSectionController::class, 'tupeOfSections']);
+        Route::get('viewDisease', [StudentDiaseasController::class, 'viewDisease']);
+        Route::get('allStudentView', [AllStudentViewController::class, 'allStudentView']);
+        Route::get('searchStudent', [StudentSearchController::class, 'searchStudent']);
+        Route::get('viewMyReferrals', [StudentReferralController::class, 'viewMyReferrals']);
+        Route::put('acceptMyReferral', [StudentReferralController::class, 'acceptMyReferral']);
+        Route::put('rejectMyReferral', [StudentReferralController::class, 'rejectMyReferral']);
     });
 });
 //////////////////////////////////////////////////////////////////////////////////
@@ -241,6 +251,7 @@ Route::group(['middleware' => ['auth:sanctum', 'section']], function () {
         Route::post('addReferralToStudent', [SectionStudentController::class, 'addReferralToStudent']);
         Route::post('addTypeOfCases', [SectionCasesController::class, 'addTypeOfCases']);
         Route::post('addSuperVisorTimeToClinic', [SectionSupervisorController::class, 'addSuperVisorTimeToClinic']);
+
     });
 });
 //////////////////////////////////////////////////////////////////////////////////

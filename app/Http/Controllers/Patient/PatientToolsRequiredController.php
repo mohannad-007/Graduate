@@ -14,11 +14,11 @@ class PatientToolsRequiredController extends Controller
     public function __construct(protected PatientService $userService)
     {
     }
-    public function toolsRequired(){
+    public function toolsRequireds(){
 
         $patient_id=auth()->user()->id;
 
-        return $this->userService->toolsRequired($patient_id);
+        return $this->userService->toolsRequireds($patient_id);
 
     }
 }

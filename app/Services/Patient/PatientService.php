@@ -132,9 +132,9 @@ class PatientService
         return $this->successResponse(data: $patient,message: "Patient Archive Appointment");
     }
 
-    public function toolsRequired($patient_id){
+    public function toolsRequireds($patient_id){
 
-        $patient=$this->patientRepository->toolsRequired($patient_id);
+        $patient=$this->patientRepository->toolsRequireds($patient_id);
         if (!$patient)
         {
             throw new HttpResponseException($this->notFoundResponse('User not Found!'));

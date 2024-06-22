@@ -9,6 +9,7 @@ class LaboratoryToolsRequired extends Model
 {
     use HasFactory;
     protected $guarded=[];
+     protected $table = 'laboratory_tools_required';
 
     public function patient()
     {
@@ -22,8 +23,8 @@ class LaboratoryToolsRequired extends Model
     {
         return $this->belongsTo(Sessions::class,'session_id');
     }
-    public function StudentLaboratoryTools()
+    public function studentLaboratoryTools()
     {
-        return $this->belongsTo(StudentLaboratoryTools::class);
+        return $this->belongsTo(StudentLaboratoryTools::class,'laboratoryTools_id');
     }
 }
