@@ -80,6 +80,46 @@ class AdminService
         }
         return  $this->resourceFoundResponse(data: $clinic,message: 'Clinics');
     }
+    public function getSpecificClinic($clinicID)
+    {
+        $clinic=$this->adminRepository->getSpecificClinic($clinicID);
+        if ($clinic->isEmpty())
+        {
+//            throw new HttpResponseException($this->internalErrorResponse('NotFound Patient!'));
+            return  $this->notFoundResponse(message: 'Clinic notFound');
+        }
+        return  $this->resourceFoundResponse(data: $clinic,message: 'Clinic Info');
+    }
+    public function deleteSpecificClinic($clinicID)
+    {
+        $clinic=$this->adminRepository->deleteSpecificClinic($clinicID);
+        if (!$clinic)
+        {
+//            throw new HttpResponseException($this->internalErrorResponse('NotFound Patient!'));
+            return  $this->notFoundResponse(message: 'Clinic notFound');
+        }
+        return  $this->resourceDeletedResponse(message: 'Clinic Deleted Successful');
+    }
+    public function updateSpecificClinic($clinicID,$number)
+    {
+        $clinic=$this->adminRepository->updateSpecificClinic($clinicID,$number);
+        if (!$clinic)
+        {
+//            throw new HttpResponseException($this->internalErrorResponse('NotFound Patient!'));
+            return  $this->notFoundResponse(message: 'Clinic notFound');
+        }
+        return  $this->resourceUpdatedResponse(data:$clinic,message: 'Clinic Updated Successful');
+    }
+    public function createClinic($sectionID,$number)
+    {
+        $clinic=$this->adminRepository->createClinic($sectionID,$number);
+        if (!$clinic)
+        {
+//            throw new HttpResponseException($this->internalErrorResponse('NotFound Patient!'));
+            return  $this->notFoundResponse(message: 'Clinic not created');
+        }
+        return  $this->resourceCreatedResponse(data:$clinic,message: 'Clinic created Successful');
+    }
 
 
 }

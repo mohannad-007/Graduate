@@ -10,4 +10,8 @@ interface AdminRepositoryInterface
     public function getPatient();
     public function searchPatient($searchTerm);
     public function getClinic();
+    public function getSpecificClinic($clinicID);
+    public function deleteSpecificClinic($clinicID);
+    public function updateSpecificClinic($clinicID,$number);
+    public function createClinic($sectionID,$number);
 }

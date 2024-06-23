@@ -43,4 +43,25 @@ class AdminRepository implements AdminRepositoryInterface
     {
         return Clinics::with('sections')->get();
     }
+    public function getSpecificClinic($clinicID)
+    {
+        return Clinics::where('id',$clinicID)->with('sections')->get();
+    }
+    public function deleteSpecificClinic($clinicID)
+    {
+        return Clinics::where('id',$clinicID)->delete();
+    }
+    public function updateSpecificClinic($clinicID,$number)
+    {
+        return Clinics::where('id',$clinicID)->update([
+            'number'=>$number
+        ]);
+    }
+    public function createClinic($sectionID,$number)
+    {
+        return Clinics::create([
+            'section_id'=>$sectionID,
+            'number'=>$number
+        ]);
+    }
 }

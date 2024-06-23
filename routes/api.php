@@ -161,6 +161,12 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
         Route::get('getPatient', [GetAllPatientController::class, 'getPatient']);
         Route::get('searchPatient', [GetAllPatientController::class, 'searchPatient']);
         Route::get('getClinic', [ClinicOperationsController::class, 'getClinic']);
+        Route::get('getSpecificClinic', [ClinicOperationsController::class, 'getSpecificClinic']);
+        Route::get('deleteSpecificClinic', [ClinicOperationsController::class, 'deleteSpecificClinic']);
+        Route::get('updateSpecificClinic', [ClinicOperationsController::class, 'updateSpecificClinic']);
+        Route::get('createClinic', [ClinicOperationsController::class, 'createClinic']);
+
+
     });
 });
 //-------------------------------------------------------------------------------
