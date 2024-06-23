@@ -3,6 +3,8 @@
 namespace App\Repositories\Admin;
 
 use App\Models\Admin;
+use App\Models\Clinics;
+use App\Models\Patient;
 use Illuminate\Support\Facades\Hash;
 
 class AdminRepository implements AdminRepositoryInterface
@@ -25,6 +27,20 @@ class AdminRepository implements AdminRepositoryInterface
     }
     public function edit($id, array $data)
     {
-        return $admin=Admin::where('id',$id)->first()->update($data);
+        return Admin::where('id',$id)->first()->update($data);
+    }
+    public function getPatient()
+    {
+        return Patient::get();
+    }
+    public function searchPatient($searchTerm)
+    {
+        return Patient::where('first_name', 'like', '%' . $searchTerm . '%')
+            ->orWhere('last_name', 'like', '%' . $searchTerm . '%')
+            ->get();
+    }
+    public function getClinic()
+    {
+        return Clinics::with('sections')->get();
     }
 }

@@ -50,6 +50,36 @@ class AdminService
             throw new HttpResponseException($this->internalErrorResponse('The Admin Profile Cannot be Edited!'));
         }
         return  $this->resourceCreatedResponse(message: "Admin Profile Edited Successful");
-
     }
+    public function getPatient()
+    {
+        $patient=$this->adminRepository->getPatient();
+        if ($patient->isEmpty())
+        {
+            throw new HttpResponseException($this->internalErrorResponse('NotFound Patient!'));
+        }
+        return  $this->resourceFoundResponse(data: $patient,message: 'Patient On The System');
+    }
+    public function searchPatient($searchTerm)
+    {
+        $patient=$this->adminRepository->searchPatient($searchTerm);
+        if ($patient->isEmpty())
+        {
+//            throw new HttpResponseException($this->internalErrorResponse('NotFound Patient!'));
+            return  $this->notFoundResponse(message: 'Patient notFound');
+        }
+        return  $this->resourceFoundResponse(data: $patient,message: 'Patient You LookFor');
+    }
+    public function getClinic()
+    {
+        $clinic=$this->adminRepository->getClinic();
+        if ($clinic->isEmpty())
+        {
+//            throw new HttpResponseException($this->internalErrorResponse('NotFound Patient!'));
+            return  $this->notFoundResponse(message: 'Clinics notFound');
+        }
+        return  $this->resourceFoundResponse(data: $clinic,message: 'Clinics');
+    }
+
+
 }

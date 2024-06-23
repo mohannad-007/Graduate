@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\ClinicOperationsController;
+use App\Http\Controllers\Admin\GetAllPatientController;
 use App\Http\Controllers\Admin\Users\AdminDiagnosisController;
 use App\Http\Controllers\Admin\Users\AdminSectionsController;
 use App\Http\Controllers\Admin\Users\AdminSupervisorsController;
@@ -154,8 +156,12 @@ Route::post('admin/auth/register', [AdminAuthController::class, 'register']);
 Route::post('admin/auth/login', [AdminAuthController::class, 'login']);
 Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
     Route::post('/admin/auth/logout', [AdminAuthController::class, 'logout']);
-    Route::post('/admin/profile/edit', [AdminProfileController::class, 'edit']);
-
+    Route::prefix('/admin/profile')->group(function () {
+        Route::post('edit', [AdminProfileController::class, 'edit']);
+        Route::get('getPatient', [GetAllPatientController::class, 'getPatient']);
+        Route::get('searchPatient', [GetAllPatientController::class, 'searchPatient']);
+        Route::get('getClinic', [ClinicOperationsController::class, 'getClinic']);
+    });
 });
 //-------------------------------------------------------------------------------
 /// Admin Management Supervisors Accounts----------------------------------------

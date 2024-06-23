@@ -52,15 +52,15 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function convertFromSection()
     {
-
         return Referrals::where('type_of_refarrals','converted_from_section')
+            ->where('status_of_refarrals','before_confirmation')
             ->with('patientCases.patient','patientCases.typesOfCases.sections')
             ->get();
     }
     public function convertFromStudent()
     {
-
         return Referrals::where('type_of_refarrals','converted_from_student')
+            ->where('status_of_refarrals','before_confirmation')
             ->with('patientCases.patient','patientCases.typesOfCases.sections')
             ->get();
     }
@@ -156,7 +156,8 @@ class StudentRepository implements StudentRepositoryInterface
             ->join('patient', 'patient_cases.patient_id', '=', 'patient.id')
             ->where('history',$history)
             ->where('referrals.student_id', auth()->user()->id)
-            ->select('patient.*')
+            ->select('sessions.*')
+            ->with('supervisor','clinics.sections','referrals.patientCases.patient')
             ->get();
 
         return $data;
