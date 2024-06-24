@@ -17,7 +17,7 @@ class TypesOfCases extends Model
 
     public function requiredOperations()
     {
-        return $this->hasMany(RequiredOperations::class);
+        return $this->hasMany(RequiredOperations::class, 'types_of_cases_id');
     }
 
     public function patientCases()

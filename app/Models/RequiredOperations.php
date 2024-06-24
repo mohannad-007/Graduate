@@ -22,6 +22,12 @@ class RequiredOperations extends Model
     {
         return $this->hasMany(ReferralRequiredOperation::class);
     }
+    public function referrals()
+    {
+        return $this->belongsToMany(Referrals::class, 'referral_required_operations')
+            ->withPivot('date')
+            ->withTimestamps();
+    }
 
 
 }

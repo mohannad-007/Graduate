@@ -62,15 +62,7 @@ class SectionService
         return $this->resourceCreatedResponse(['token' => $token], "Section Login Successful");
     }
 
-    public function showPatientsInCurrentChapter($section, $chapter)
-    {
 
-        $section = $this->sectionRepository->showPatientsInCurrentChapter($section, $chapter);
-        if (!$section) {
-            throw new HttpResponseException($this->notFoundResponse('Patients Not Found in this '));
-        }
-        return $this->successResponse(data: $section, message: "Patients in Current Chapter");
-    }
 
     public function getSections()
     {
@@ -120,6 +112,42 @@ class SectionService
         }
         return $this->resourceCreatedResponse(data: $section, message: "SuperVisor Time To Clinic Added Successfully");
     }
+    public function showPatientsInCurrentChapter($section, $chapter)
+    {
+
+        $section = $this->sectionRepository->showPatientsInCurrentChapter($section, $chapter);
+        if (!$section) {
+            throw new HttpResponseException($this->notFoundResponse('Patients Not Found in this '));
+        }
+        return $this->successResponse(data: $section, message: "Patients in Current Chapter");
+    }
+    public function showCasesInCurrentChapter($section,$chapter)
+    {
+
+        $section = $this->sectionRepository->showCasesInCurrentChapter($section, $chapter);
+        if (!$section) {
+            throw new HttpResponseException($this->notFoundResponse('Cases Not Found in this '));
+        }
+        return $this->successResponse(data: $section, message: "Cases in Current Chapter");
+    }
+    public function showArchiveCasesDate($section,$date)
+    {
+
+        $section = $this->sectionRepository->showArchiveCasesDate($section, $date);
+        if (!$section) {
+            throw new HttpResponseException($this->notFoundResponse('Cases Not Found in this '));
+        }
+        return $this->successResponse(data: $section, message: "Cases ");
+    }
+    public function showPatientCasesWithStudents($section)
+    {
+        $section = $this->sectionRepository->showPatientCasesWithStudents($section);
+        if (!$section) {
+            throw new HttpResponseException($this->notFoundResponse('Cases Not Found in this '));
+        }
+        return $this->successResponse(data: $section, message: "patients cases ");
+    }
+
 
 
 }
