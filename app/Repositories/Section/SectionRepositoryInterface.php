@@ -16,6 +16,14 @@ interface SectionRepositoryInterface
     public function showCasesInCurrentChapter($section,$chapter);
     public function showArchiveCasesDate($section,$dateInput);
     public function showPatientCasesWithStudents($section);
+    public function showStudentsReferrals($section);
+    public function showPatientTransferRequest($section);
+    public function acceptTransferRequest($transfer_id);
+    public function rejectTransferRequest($transfer_id);
+    public function showSectionTypeOfCases($section);
+    public function showClinicsInSection($section);
+    public function deleteTypeOfCases($type_id);
+    public function updateTypeOfCases($type_id,$type);
 
 
 }
