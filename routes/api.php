@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\ClinicOperationsController;
 use App\Http\Controllers\Admin\GetAllPatientController;
+use App\Http\Controllers\Admin\SectionsOperationsController;
+use App\Http\Controllers\Admin\StudentOperationsController;
 use App\Http\Controllers\Admin\Users\AdminDiagnosisController;
 use App\Http\Controllers\Admin\Users\AdminSectionsController;
 use App\Http\Controllers\Admin\Users\AdminSupervisorsController;
@@ -162,9 +164,17 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
         Route::get('searchPatient', [GetAllPatientController::class, 'searchPatient']);
         Route::get('getClinic', [ClinicOperationsController::class, 'getClinic']);
         Route::get('getSpecificClinic', [ClinicOperationsController::class, 'getSpecificClinic']);
-        Route::get('deleteSpecificClinic', [ClinicOperationsController::class, 'deleteSpecificClinic']);
-        Route::get('updateSpecificClinic', [ClinicOperationsController::class, 'updateSpecificClinic']);
-        Route::get('createClinic', [ClinicOperationsController::class, 'createClinic']);
+        Route::delete('deleteSpecificClinic', [ClinicOperationsController::class, 'deleteSpecificClinic']);
+        Route::put('updateSpecificClinic', [ClinicOperationsController::class, 'updateSpecificClinic']);
+        Route::post('createClinic', [ClinicOperationsController::class, 'createClinic']);
+        Route::post('createStudentInfo', [StudentOperationsController::class, 'createStudentInfo']);
+        Route::put('updateStudentInfo', [StudentOperationsController::class, 'updateStudentInfo']);
+        Route::get('viewAllStudentInfo', [StudentOperationsController::class, 'viewAllStudentInfo']);
+        Route::get('viewSpecificStudentInfo', [StudentOperationsController::class, 'viewSpecificStudentInfo']);
+        Route::delete('deleteSpecificStudentInfo', [StudentOperationsController::class, 'deleteSpecificStudentInfo']);
+        Route::put('giveRuleDiagnosisToStudent', [StudentOperationsController::class, 'giveRuleDiagnosisToStudent']);
+        Route::get('getAllSections', [SectionsOperationsController::class, 'getAllSections']);
+        Route::delete('deleteSpecificSections', [SectionsOperationsController::class, 'deleteSpecificSections']);
 
 
     });

@@ -14,4 +14,12 @@ interface AdminRepositoryInterface
     public function deleteSpecificClinic($clinicID);
     public function updateSpecificClinic($clinicID,$number);
     public function createClinic($sectionID,$number);
+    public function createStudentInfo($UN);
+    public function updateStudentInfo($UN,$id);
+    public function viewAllStudentInfo();
+    public function viewSpecificStudentInfo($id);
+    public function deleteSpecificStudentInfo($id);
+    public function giveRuleDiagnosisToStudent($id);
+    public function getAllSections();
+    public function deleteSpecificSections($id);
 }

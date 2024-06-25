@@ -5,6 +5,8 @@ namespace App\Repositories\Admin;
 use App\Models\Admin;
 use App\Models\Clinics;
 use App\Models\Patient;
+use App\Models\Sections;
+use App\Models\Student;
 use Illuminate\Support\Facades\Hash;
 
 class AdminRepository implements AdminRepositoryInterface
@@ -63,5 +65,43 @@ class AdminRepository implements AdminRepositoryInterface
             'section_id'=>$sectionID,
             'number'=>$number
         ]);
+    }
+    public function createStudentInfo($UN)
+    {
+        return Student::create([
+            'university_number'=>$UN
+        ]);
+    }
+    public function updateStudentInfo($UN,$id)
+    {
+        return Student::find($id)->update([
+            'university_number'=>$UN
+        ]);
+    }
+    public function viewAllStudentInfo()
+    {
+        return Student::get();
+    }
+    public function viewSpecificStudentInfo($id)
+    {
+        return Student::where('id',$id)->get();
+    }
+    public function deleteSpecificStudentInfo($id)
+    {
+        return Student::where('id',$id)->delete();
+    }
+    public function giveRuleDiagnosisToStudent($id)
+    {
+        return Student::where('id',$id)->update([
+            'diagnosis'=>1
+        ]);
+    }
+    public function getAllSections()
+    {
+        return Sections::get();
+    }
+    public function deleteSpecificSections($id)
+    {
+        return Sections::where('id',$id)->delete();
     }
 }

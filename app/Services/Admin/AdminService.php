@@ -98,7 +98,7 @@ class AdminService
 //            throw new HttpResponseException($this->internalErrorResponse('NotFound Patient!'));
             return  $this->notFoundResponse(message: 'Clinic notFound');
         }
-        return  $this->resourceDeletedResponse(message: 'Clinic Deleted Successful');
+        return  $this->resourceDeletedResponse(message:'Clinic Deleted Successful');
     }
     public function updateSpecificClinic($clinicID,$number)
     {
@@ -119,6 +119,86 @@ class AdminService
             return  $this->notFoundResponse(message: 'Clinic not created');
         }
         return  $this->resourceCreatedResponse(data:$clinic,message: 'Clinic created Successful');
+    }
+    public function createStudentInfo($UN)
+    {
+        $student=$this->adminRepository->createStudentInfo($UN);
+        if (!$student)
+        {
+//            throw new HttpResponseException($this->internalErrorResponse('NotFound Patient!'));
+            return  $this->notFoundResponse(message: 'Student NotFound');
+        }
+        return  $this->resourceCreatedResponse(data:$student,message: 'Student created Successful');
+    }
+    public function updateStudentInfo($UN,$id)
+    {
+        $student=$this->adminRepository->updateStudentInfo($UN,$id);
+        if (!$student)
+        {
+//            throw new HttpResponseException($this->internalErrorResponse('NotFound Patient!'));
+            return  $this->notFoundResponse(message: 'Student NotFound');
+        }
+        return  $this->resourceUpdatedResponse(data:$student,message: 'Student updated Successful');
+    }
+    public function viewAllStudentInfo()
+    {
+        $student=$this->adminRepository->viewAllStudentInfo();
+        if (!$student)
+        {
+//            throw new HttpResponseException($this->internalErrorResponse('NotFound Patient!'));
+            return  $this->notFoundResponse(message:'Student NotFound');
+        }
+        return  $this->resourceFoundResponse(data:$student,message:'Student');
+    }
+    public function viewSpecificStudentInfo($id)
+    {
+        $student=$this->adminRepository->viewSpecificStudentInfo($id);
+        if (!$student)
+        {
+//            throw new HttpResponseException($this->internalErrorResponse('NotFound Patient!'));
+            return  $this->notFoundResponse(message:'Student NotFound');
+        }
+        return  $this->resourceFoundResponse(data:$student,message:'Student');
+    }
+    public function deleteSpecificStudentInfo($id)
+    {
+        $student=$this->adminRepository->deleteSpecificStudentInfo($id);
+        if (!$student)
+        {
+//            throw new HttpResponseException($this->internalErrorResponse('NotFound Patient!'));
+            return  $this->notFoundResponse(message: 'Student NotFound');
+        }
+        return  $this->resourceDeletedResponse(message:'Student Deleted Successful');
+    }
+    public function giveRuleDiagnosisToStudent($id)
+    {
+        $student=$this->adminRepository->giveRuleDiagnosisToStudent($id);
+        if (!$student)
+        {
+//            throw new HttpResponseException($this->internalErrorResponse('NotFound Patient!'));
+            return  $this->notFoundResponse(message: 'Student NotFound');
+        }
+        return  $this->resourceUpdatedResponse(message:'Student Successful Give Rules');
+    }
+    public function getAllSections()
+    {
+        $section=$this->adminRepository->getAllSections();
+        if (!$section)
+        {
+//            throw new HttpResponseException($this->internalErrorResponse('NotFound Patient!'));
+            return  $this->notFoundResponse(message: 'Sections NotFound');
+        }
+        return  $this->resourceFoundResponse(data:$section,message:'Sections');
+    }
+    public function deleteSpecificSections($id)
+    {
+        $section=$this->adminRepository->deleteSpecificSections($id);
+        if (!$section)
+        {
+//            throw new HttpResponseException($this->internalErrorResponse('NotFound Patient!'));
+            return  $this->notFoundResponse(message: 'Sections NotFound');
+        }
+        return  $this->resourceDeletedResponse(message:'Sections Deleted Successful');
     }
 
 
