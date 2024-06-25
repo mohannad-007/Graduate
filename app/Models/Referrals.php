@@ -8,13 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Referrals extends Model
 {
     use HasFactory;
-//    protected $fillable=[
-//        'status_done',
-//        'status_of_refarrals',
-//        'patient_cases_id',
-//        'student_id',
-//        'type_of_refarrals',
-//    ];
+
     protected $guarded=[];
 protected  $hidden = ['created_at','updated_at'];
     public function student()
@@ -39,5 +33,11 @@ protected  $hidden = ['created_at','updated_at'];
     public function referralRequiredOperation()
     {
         return $this->hasMany(ReferralRequiredOperation::class);
+    }
+    public function requiredOperations()
+    {
+        return $this->belongsToMany(RequiredOperations::class, 'referral_required_operations')
+            ->withPivot('date')
+            ->withTimestamps();
     }
 }

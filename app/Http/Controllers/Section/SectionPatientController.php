@@ -17,7 +17,28 @@ class SectionPatientController extends Controller
     public function showPatientsInCurrentChapter(Request $request)
     {
         $chapter=$request->chapter;
-        $section_id=$request->section_id;
+        $section_id=auth()->id();
+
         return $this->sectionService->showPatientsInCurrentChapter($section_id,$chapter);
+    }
+    public function showCasesInCurrentChapter(Request $request)
+    {
+        $chapter=$request->chapter;
+        $section_id=auth()->id();
+
+        return $this->sectionService->showCasesInCurrentChapter($section_id,$chapter);
+    }
+    public function showArchiveCasesDate(Request $request)
+    {
+        $date=$request->date;
+        $section_id=auth()->id();
+
+        return $this->sectionService->showArchiveCasesDate($section_id,$date);
+    }
+    public function showPatientCasesWithStudents(Request $request)
+    {
+        $section_id=auth()->id();
+
+        return $this->sectionService->showPatientCasesWithStudents($section_id);
     }
 }

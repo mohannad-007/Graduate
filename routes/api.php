@@ -269,10 +269,13 @@ Route::group(['middleware' => ['auth:sanctum', 'section']], function () {
     Route::prefix('/section/profile')->group(function ()
     {
         Route::post('edit', [SectionProfileController::class, 'edit']);
-        Route::get('showPatientsInCurrentChapter', [SectionPatientController::class, 'showPatientsInCurrentChapter']);
         Route::post('addReferralToStudent', [SectionStudentController::class, 'addReferralToStudent']);
         Route::post('addTypeOfCases', [SectionCasesController::class, 'addTypeOfCases']);
         Route::post('addSuperVisorTimeToClinic', [SectionSupervisorController::class, 'addSuperVisorTimeToClinic']);
+        Route::get('showPatientsInCurrentChapter', [SectionPatientController::class, 'showPatientsInCurrentChapter']);
+        Route::get('showCasesInCurrentChapter', [SectionPatientController::class, 'showCasesInCurrentChapter']);
+        Route::get('showArchiveCasesDate', [SectionPatientController::class, 'showArchiveCasesDate']);
+        Route::get('showPatientCasesWithStudents', [SectionPatientController::class, 'showPatientCasesWithStudents']);
 
     });
 });
