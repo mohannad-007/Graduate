@@ -22,4 +22,7 @@ interface AdminRepositoryInterface
     public function giveRuleDiagnosisToStudent($id);
     public function getAllSections();
     public function deleteSpecificSections($id);
+    public function getProfileSections();
+    public function getProfileSupervisor();
+    public function getProfileDiagnosis();
 }

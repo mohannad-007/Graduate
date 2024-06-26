@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\ClinicOperationsController;
 use App\Http\Controllers\Admin\GetAllPatientController;
+use App\Http\Controllers\Admin\GetProfileOperationsController;
 use App\Http\Controllers\Admin\SectionsOperationsController;
 use App\Http\Controllers\Admin\StudentOperationsController;
 use App\Http\Controllers\Admin\Users\AdminDiagnosisController;
@@ -175,6 +176,9 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
         Route::put('giveRuleDiagnosisToStudent', [StudentOperationsController::class, 'giveRuleDiagnosisToStudent']);
         Route::get('getAllSections', [SectionsOperationsController::class, 'getAllSections']);
         Route::delete('deleteSpecificSections', [SectionsOperationsController::class, 'deleteSpecificSections']);
+        Route::get('getProfileSections', [GetProfileOperationsController::class, 'getProfileSections']);
+        Route::get('getProfileSupervisor', [GetProfileOperationsController::class, 'getProfileSupervisor']);
+        Route::get('getProfileDiagnosis', [GetProfileOperationsController::class, 'getProfileDiagnosis']);
 
 
     });

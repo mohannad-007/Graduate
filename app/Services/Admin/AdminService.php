@@ -200,6 +200,36 @@ class AdminService
         }
         return  $this->resourceDeletedResponse(message:'Sections Deleted Successful');
     }
+    public function getProfileSections()
+    {
+        $section=$this->adminRepository->getProfileSections();
+        if (!$section)
+        {
+//            throw new HttpResponseException($this->internalErrorResponse('NotFound Patient!'));
+            return  $this->notFoundResponse(message: 'Sections NotFound');
+        }
+        return  $this->resourceFoundResponse(data:$section,message:'Sections');
+    }
+    public function getProfileSupervisor()
+    {
+        $supervisor=$this->adminRepository->getProfileSupervisor();
+        if (!$supervisor)
+        {
+//            throw new HttpResponseException($this->internalErrorResponse('NotFound Patient!'));
+            return  $this->notFoundResponse(message: 'Supervisor NotFound');
+        }
+        return  $this->resourceFoundResponse(data:$supervisor,message:'Supervisor');
+    }
+    public function getProfileDiagnosis()
+    {
+        $diagnosis=$this->adminRepository->getProfileDiagnosis();
+        if (!$diagnosis)
+        {
+//            throw new HttpResponseException($this->internalErrorResponse('NotFound Patient!'));
+            return  $this->notFoundResponse(message: 'Diagnosis NotFound');
+        }
+        return  $this->resourceFoundResponse(data:$diagnosis,message:'Diagnosis');
+    }
 
 
 }
