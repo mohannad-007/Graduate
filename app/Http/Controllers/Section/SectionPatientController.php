@@ -41,4 +41,27 @@ class SectionPatientController extends Controller
 
         return $this->sectionService->showPatientCasesWithStudents($section_id);
     }
+    public function showStudentsReferrals(Request $request)
+    {
+        $section_id=auth()->id();
+
+        return $this->sectionService->showStudentsReferrals($section_id);
+    }
+    public function showPatientTransferRequest(Request $request)
+    {
+        $section_id=auth()->id();
+
+        return $this->sectionService->showPatientTransferRequest($section_id);
+    }
+    public function acceptTransferRequest(Request $request)
+    {
+        $transfer_id=$request->transfer_id;
+        return $this->sectionService->acceptTransferRequest($transfer_id);
+    }
+    public function rejectTransferRequest(Request $request)
+    {
+        $transfer_id=$request->transfer_id;
+        return $this->sectionService->rejectTransferRequest($transfer_id);
+    }
+
 }

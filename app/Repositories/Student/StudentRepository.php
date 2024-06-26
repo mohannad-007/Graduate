@@ -143,7 +143,7 @@ class StudentRepository implements StudentRepositoryInterface
             ->join('patient_cases', 'referrals.patient_cases_id', '=', 'patient_cases.id')
             ->where('patient_cases.patient_id', $patientId)
             ->select('sessions.*')
-            ->with('supervisor','clinics.sections','referrals.patientCases')
+            ->with('supervisor','clinics.sections','referrals.patientCases.patient')
             ->get();
 
         return $data;

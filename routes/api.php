@@ -280,6 +280,14 @@ Route::group(['middleware' => ['auth:sanctum', 'section']], function () {
         Route::get('showCasesInCurrentChapter', [SectionPatientController::class, 'showCasesInCurrentChapter']);
         Route::get('showArchiveCasesDate', [SectionPatientController::class, 'showArchiveCasesDate']);
         Route::get('showPatientCasesWithStudents', [SectionPatientController::class, 'showPatientCasesWithStudents']);
+        Route::get('showStudentsReferrals', [SectionPatientController::class, 'showStudentsReferrals']);
+        Route::get('showPatientTransferRequest', [SectionPatientController::class, 'showPatientTransferRequest']);
+        Route::post('acceptTransferRequest', [SectionPatientController::class, 'acceptTransferRequest']);
+        Route::post('rejectTransferRequest', [SectionPatientController::class, 'rejectTransferRequest']);
+        Route::get('showSectionTypeOfCases', [SectionCasesController::class, 'showSectionTypeOfCases']);
+        Route::get('showClinicsInSection', [SectionCasesController::class, 'showClinicsInSection']);
+        Route::delete('deleteTypeOfCases', [SectionCasesController::class, 'deleteTypeOfCases']);
+        Route::put('updateTypeOfCases', [SectionCasesController::class, 'updateTypeOfCases']);
 
     });
 });
