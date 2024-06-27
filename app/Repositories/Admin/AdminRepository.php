@@ -4,9 +4,11 @@ namespace App\Repositories\Admin;
 
 use App\Models\Admin;
 use App\Models\Clinics;
+use App\Models\Diagnosis;
 use App\Models\Patient;
 use App\Models\Sections;
 use App\Models\Student;
+use App\Models\Supervisor;
 use Illuminate\Support\Facades\Hash;
 
 class AdminRepository implements AdminRepositoryInterface
@@ -103,5 +105,17 @@ class AdminRepository implements AdminRepositoryInterface
     public function deleteSpecificSections($id)
     {
         return Sections::where('id',$id)->delete();
+    }
+    public function getProfileSections()
+    {
+        return Sections::get();
+    }
+    public function getProfileSupervisor()
+    {
+        return Supervisor::get();
+    }
+    public function getProfileDiagnosis()
+    {
+        return Diagnosis::get();
     }
 }
