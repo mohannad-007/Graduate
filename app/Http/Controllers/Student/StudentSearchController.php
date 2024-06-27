@@ -33,7 +33,7 @@ class StudentSearchController extends Controller
 
         // التحقق من وجود نتائج
         if ($students->isEmpty()) {
-            return response()->json(['message' => 'No students found'], 404);
+            return response()->json(['message' => 'No student found'], 404);
         }
 
         // إرجاع النتائج

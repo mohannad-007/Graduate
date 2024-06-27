@@ -104,7 +104,7 @@ class SectionRepository implements  SectionRepositoryInterface
             ->join('referral_required_operations', 'referrals.id', '=', 'referral_required_operations.referral_id')
             ->join('required_operations', 'referral_required_operations.required_operation_id', '=', 'required_operations.id')
             ->join('types_of_cases', 'required_operations.types_of_cases_id', '=', 'types_of_cases.id')
-            ->join('student', 'referrals.student_id', '=', 'student.id') // انضمام جدول students باستخدام student_id من جدول referrals
+            ->join('student', 'referrals.student_id', '=', 'student.id') // انضمام جدول student باستخدام student_id من جدول referrals
             ->where('referrals.status_of_refarrals', 'confirmed')
 //            ->where('referrals.status_done', 'not_finished')
             ->where('required_operations.chapter', $chapter)

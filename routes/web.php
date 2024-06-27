@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\Users\StudentImportController;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,10 +15,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    phpinfo();    return view('welcome');
+//    phpinfo();    return view('welcome');
 });
 
-
+Route::post('/import-students', [StudentImportController::class, 'import'])->name('import.students');
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
+
+//Route::group(['prefix' => 'section', 'middleware' => ['auth:sanctum', 'section']], function () {
+//    Voyager::routes();
+//
+//    Route::get('/dashboard', [SectionDashboardController::class, 'index'])->name('section.dashboard');
+//});
