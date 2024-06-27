@@ -179,6 +179,7 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
         Route::get('getProfileSections', [GetProfileOperationsController::class, 'getProfileSections']);
         Route::get('getProfileSupervisor', [GetProfileOperationsController::class, 'getProfileSupervisor']);
         Route::get('getProfileDiagnosis', [GetProfileOperationsController::class, 'getProfileDiagnosis']);
+        Route::post('importStudents', [StudentOperationsController::class, 'importStudents']);
 
 
     });
