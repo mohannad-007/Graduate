@@ -16,6 +16,8 @@ class Sections extends Authenticatable
     protected $hidden = ['password','created_at','updated_at'];
 //    protected $fillable=['name','details','email','password'];
 
+    // Define the relationship with User
+
     public function clinics()
     {
         return $this->hasMany(Clinics::class);
