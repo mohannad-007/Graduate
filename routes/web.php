@@ -23,8 +23,3 @@ Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
 
-//Route::group(['prefix' => 'section', 'middleware' => ['auth:sanctum', 'section']], function () {
-//    Voyager::routes();
-//
-//    Route::get('/dashboard', [SectionDashboardController::class, 'index'])->name('section.dashboard');
-//});
